@@ -2,7 +2,7 @@ gameState = {}
 
 function gameState:init()
     self.characters = {
-        Player(0, 0, "Animations/PlayerAnim.json", "Animations/PlayerAnim.png", "Down")
+        Player(0, 0, "Assets/Animations/PlayerAnim.json", "Assets/Animations/PlayerAnim.png", "Down")
     }
 end
 
