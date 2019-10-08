@@ -25,7 +25,9 @@ function gameState:update(dt)
 	
 	if love.keyboard.isDown("a") then
         moveX = -speed * dt
-        -- Zmiana tagu resetuje animacje wiec gdy są wciśnięte dwa klawisze animacja nie odtwarza się
+        -- Zmiana tagu resetuje animacje wiec gdy są wciśnięte dwa klawisze animacja nie odtwarza się 
+        -- Czy powyższe wciąż aktualne? U mnie animacje śmigają wzglednie jak należy - odtwarzają się, przy wcisnietym W/S potem A/D nie zmieniają, przy A/D potem W/S zmieniają. //Aran
+        -- My raczej będziemy mieć 4-direction movement, zeby nie zajebac sie assetami, ale czekam na ostateczne potwierdzenie od graficzek. //Aran
         if not love.keyboard.isDown("w") and not love.keyboard.isDown("s") then
             TestCharacter:setAnimationTag("Left")
         end
