@@ -1,48 +1,19 @@
 gameState = {}
 
 function gameState:init()
-    -- Tymczasowe do testu animacji
-    speed = 100
-    moveX = 0
-    moveY = 0
-    TestCharacter = Character(0, 0, "Animations/TestAnim.json", "Animations/TestAnim.png", "Up")
+    self.characters = {
+        Player(0, 0, "Animations/PlayerAnim.json", "Animations/PlayerAnim.png", "Down")
+    }
 end
 
 function gameState:update(dt)
-    TestCharacter:update(dt)
-
-    -- Tymczasowe do testu animacji
-    moveX = 0
-    moveY = 0
-    
-    if love.keyboard.isDown("w") then
-        moveY = -speed * dt
-        TestCharacter:setAnimationTag("Up")
-	elseif love.keyboard.isDown("s") then
-        moveY = speed * dt
-        TestCharacter:setAnimationTag("Down")
-	end
-	
-	if love.keyboard.isDown("a") then
-        moveX = -speed * dt
-        -- Zmiana tagu resetuje animacje wiec gdy są wciśnięte dwa klawisze animacja nie odtwarza się 
-        -- Czy powyższe wciąż aktualne? U mnie animacje śmigają wzglednie jak należy - odtwarzają się, przy wcisnietym W/S potem A/D nie zmieniają, przy A/D potem W/S zmieniają. //Aran
-        -- My raczej będziemy mieć 4-direction movement, zeby nie zajebac sie assetami, ale czekam na ostateczne potwierdzenie od graficzek. //Aran
-        if not love.keyboard.isDown("w") and not love.keyboard.isDown("s") then
-            TestCharacter:setAnimationTag("Left")
-        end
-	elseif love.keyboard.isDown("d") then
-        moveX = speed * dt
-        if not love.keyboard.isDown("w") and not love.keyboard.isDown("s") then
-            TestCharacter:setAnimationTag("Right")
-        end
+    for i, character in ipairs(self.characters) do
+        character:update(dt)
     end
-    
-    TestCharacter:move(moveX, moveY)
-    
 end
 
 function gameState:draw()
-    -- Tymczasowe do testu animacji
-    TestCharacter:draw()
+    for i, character in ipairs(self.characters) do
+        character:draw()
+    end
 end
