@@ -1,3 +1,6 @@
+-- Inne
+peachy = require("Libraries/peachy-master/peachy")
+
 -- Classes
 Class = require("Libraries/hump-master/class")
 require("Classes/Character")
