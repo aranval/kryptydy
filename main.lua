@@ -1,5 +1,6 @@
 -- Inne
 peachy = require("Libraries/peachy-master/peachy")
+iffy = require('Libraries/iffy-master/iffy')
 
 -- InputManager
 baton = require('Libraries/baton-master/baton')
@@ -27,14 +28,18 @@ require("Classes/Characters/Cryptid")
 
 -- GameStates
 GameState = require("Libraries/hump-master/gamestate")
-require("States/menuState")
-require("States/gameState")
-require("States/battleState")
-require("States/gameOverState")
+require("States/MenuState")
+require("States/TestLevelState")
+require("States/BattleState")
+require("States/GameOverState")
 
 function love.load()
+	-- Wczytywanie Tilesetów i tilemap
+    iffy.newTileset("Testset", "Assets/Tilemaps/TestTile.png")
+    iffy.newTilemap("Testmap", "Assets/Tilemaps/TestMap.csv")
+	
 	GameState.registerEvents()
-	GameState.switch(gameState)
+	GameState.switch(TestLevelState)
 end
 
 function love.update(dt)
