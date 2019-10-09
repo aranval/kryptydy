@@ -1,6 +1,7 @@
 -- Inne
 peachy = require("Libraries/peachy-master/peachy")
 iffy = require('Libraries/iffy-master/iffy')
+Camera = require("Libraries/hump-master/camera")
 
 -- InputManager
 baton = require('Libraries/baton-master/baton')

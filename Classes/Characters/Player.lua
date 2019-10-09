@@ -5,6 +5,10 @@ function Player:init(x, y, animationJson, animationImage, animationStartTag)
     self.horizontal = true
 end
 
+function Player:getPosition()
+    return Character.x, Character.y
+end
+
 function Player:update(dt)
     local inputX, inputY = Input:get("move")
 
@@ -38,6 +42,6 @@ function Player:update(dt)
     Character:update(dt)
 end
 
-function Player:draw() 
+function Player:draw()
     Character:draw()
 end
