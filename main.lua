@@ -35,8 +35,20 @@ require("States/GameOverState")
 
 function love.load()
 	-- Wczytywanie Tilesetów i tilemap
-    iffy.newTileset("Testset", "Assets/Tilemaps/TestTile.png")
-    iffy.newTilemap("Testmap", "Assets/Tilemaps/TestMap.csv")
+	local t={}
+
+	for line in love.filesystem.lines("Assets/Tilemaps/TestMap.csv") do
+		local row={}
+		i=1
+		for tile_no in line:gmatch("[^,]+") do
+			row[#row+1]=tonumber(tile_no)
+			i=i+1
+		end
+		t[#t+1]=row
+	end
+
+	iffy.newTileset("Testset", "Assets/Tilemaps/TestTile.png")
+    iffy.newTilemap("Testmap", t) -- Tablice trzeba wczytywać ręcznie, iffy wywala bład gdy da się jej tylko url.
 	
 	GameState.registerEvents()
 	GameState.switch(TestLevelState)
