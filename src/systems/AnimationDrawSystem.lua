@@ -1,4 +1,4 @@
-local AnimationDrawSystem = tiny.processingSystem(Class {})
+local AnimationDrawSystem = tiny.processingSystem()
 AnimationDrawSystem.isDrawingSystem = true
 
 AnimationDrawSystem.filter = tiny.requireAll("animation")

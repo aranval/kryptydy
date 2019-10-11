@@ -1,4 +1,4 @@
-local AnimationUpdateSystem = tiny.processingSystem(Class {})
+local AnimationUpdateSystem = tiny.processingSystem()
 
 AnimationUpdateSystem.filter = tiny.requireAll("animation")
 

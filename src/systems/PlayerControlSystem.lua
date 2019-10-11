@@ -1,4 +1,4 @@
-local PlayerControlSystem  = tiny.processingSystem(Class {})
+local PlayerControlSystem  = tiny.processingSystem()
 
 PlayerControlSystem.filter = tiny.requireAll("controlable")
 
