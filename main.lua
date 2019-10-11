@@ -20,36 +20,29 @@ Input = baton.new {
 	joystick = love.joystick.getJoysticks()[1],
   }
 
--- Classes
+-- ECS
 Class = require("Libraries/hump-master/class")
-require("Classes/Character")
-require("Classes/Characters/Player")
-require("Classes/Characters/Npc")
-require("Classes/Characters/Cryptid")
+tiny = require("Libraries/tiny-ecs-master/tiny")
+drawSystemFilter = tiny.requireAll("isDrawingSystem")
+updateSystemFilter = tiny.rejectAll("isDrawingSystem")
 
 -- GameStates
 GameState = require("Libraries/hump-master/gamestate")
-require("States/MenuState")
-require("States/TestLevelState")
-require("States/BattleState")
-require("States/GameOverState")
+require("src/states/MenuState")
+require("src/states/TestLevelState")
+require("src/states/BattleState")
+require("src/states/GameOverState")
+
+-- GLOBALNE
+assets = {}
 
 function love.load()
+	-- Wczytywanie assetów
+	assets = require("src/assets")
+
 	-- Wczytywanie Tilesetów i tilemap
-	local t={}
-
-	for line in love.filesystem.lines("Assets/Tilemaps/TestMap.csv") do
-		local row={}
-		i=1
-		for tile_no in line:gmatch("[^,]+") do
-			row[#row+1]=tonumber(tile_no)
-			i=i+1
-		end
-		t[#t+1]=row
-	end
-
 	iffy.newTileset("Testset", "Assets/Tilemaps/TestTile.png")
-    iffy.newTilemap("Testmap", t) -- Tablice trzeba wczytywać ręcznie, iffy wywala bład gdy da się jej tylko url.
+    iffy.newTilemap("Testmap", "Assets/Tilemaps/TestMap.csv") 
 	
 	GameState.registerEvents()
 	GameState.switch(TestLevelState)
