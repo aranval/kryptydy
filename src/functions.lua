@@ -1,11 +1,30 @@
-function GenerateCollisionsFromStartup(timemap, bumpWorld, tileSize) 
+colliderIndex = 1
+playerIndex = 2
+
+goToTestLevel1 = 3
+goToTestLevel2 = 4
+
+function tableCopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[tableCopy(orig_key)] = tableCopy(orig_value)
+        end
+        setmetatable(copy, tableCopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
+function generateCollisionsFromStartup(startup, bumpWorld, tileSize) 
     local x, y = 0, 0
-    for line in love.filesystem.lines(timemap)  do
+    for line in love.filesystem.lines(startup)  do
         x=0
-        for tile_no in line:gmatch("[^,]+") do
-            local n = tonumber(tile_no)
-            
-            if(n == 1) then
+        for tile_no in line:gmatch("[^,]+") do            
+            if(tonumber(tile_no) == colliderIndex) then
                 bumpWorld:add({name = "Tile"}, x*32, y*32, tileSize, tileSize)
             end
             
@@ -15,16 +34,61 @@ function GenerateCollisionsFromStartup(timemap, bumpWorld, tileSize)
     end
 end
 
-function GetPlayerPositionFromStartup(timemap, tileSize) 
+function getPlayerPositionFromStartup(startup, tileSize) 
     local x, y = 0, 0
-    for line in love.filesystem.lines(timemap) do
+    for line in love.filesystem.lines(startup) do
         x=0
         for tile_no in line:gmatch("[^,]+") do
-            if tonumber(tile_no) == 2 then
+            if tonumber(tile_no) == playerIndex then
                 return x*tileSize, y*tileSize
             end
             x = x + 1
         end
         y = y + 1
+    end
+end
+
+function getEntitiesFromStartup(startup, tileSize)
+    local ret = {{}}
+    local x, y = 0, 0
+    for line in love.filesystem.lines(startup) do
+        x=0
+        for tile_no in line:gmatch("[^,]+") do
+            if tonumber(tile_no) == goToTestLevel1 then
+                local e = tableCopy(require("src/entities/TriggerGoToOtherState"))
+                e.stateTable = TestLevelState
+                e.pos.x = x * tileSize
+                e.pos.y = y * tileSize
+                ret[#ret+1] = e
+            end
+            if tonumber(tile_no) == goToTestLevel2 then                
+                local e = tableCopy(require("src/entities/TriggerGoToOtherState"))
+                e.stateTable = TestLevel2State
+                e.pos.x = x * tileSize
+                e.pos.y = y * tileSize
+                ret[#ret+1] = e
+            end
+            x = x + 1
+        end
+        y = y + 1
+    end    
+    return unpack(ret)
+end
+
+function debugDraw(isTrue)
+    if isTrue then
+        local items, len = bumpWorld:getItems()
+        for i=1, len do
+            local item = items[i]
+            local x,y,w,h = bumpWorld:getRect(item)
+
+            love.graphics.setColor(0,0,127)
+            if item.collider and item.collider.isTrigger then
+                love.graphics.setColor(127,127,0)
+            end
+            love.graphics.rectangle("fill", x, y, w, h)
+            love.graphics.setColor(255,255,255)
+            
+        end
     end
 end

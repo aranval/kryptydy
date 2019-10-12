@@ -1,11 +1,11 @@
-TestLevelState = {}
+TestLevel2State = {}
 
-function TestLevelState:enter(prev)
+function TestLevel2State:enter(prev)
     self.playerEntity = require("src/entities/Player")
     local tilemapEntity = require("src/entities/TileMap")
-    local startup = "Assets/Tilemaps/TestLevel_Startup.csv"
+    local startup = "Assets/Tilemaps/TestLevel2_Startup.csv"
 
-    tilemapEntity.tilemap = "TestLevel1"
+    tilemapEntity.tilemap = "TestLevel2"
     tilemapEntity.tileset = "TestSet"
 
     gotoState = nil
@@ -34,20 +34,19 @@ function TestLevelState:enter(prev)
     )
 end
 
-function TestLevelState:leave()
+function TestLevel2State:leave()
     tiny.clearEntities(tinyWorld)
     tiny.clearSystems(tinyWorld)
     tiny.refresh(tinyWorld)
 end
 
-function TestLevelState:update(dt)    
+function TestLevel2State:update(dt)
+    tinyWorld:update(dt, updateSystemFilter);
+    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)
+
     if gotoState then
         GameState.switch(gotoState)
     end
-
-    tinyWorld:update(dt, updateSystemFilter);
-    
-    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)
 
     if(Input:pressed("debug")) then 
         if self.debugDraw then self.debugDraw = false
@@ -55,13 +54,13 @@ function TestLevelState:update(dt)
     end
 end
 
-function TestLevelState:draw()
+function TestLevel2State:draw()
     love.graphics.print("F1 - toggle debug")
 
     self.camera:attach() 
     tinyWorld:update(dt, drawSystemFilter);
 
-    debugDraw(self.debugDraw) 
+    debugDraw(self.debugDraw)
 
     self.camera:detach()    
 end

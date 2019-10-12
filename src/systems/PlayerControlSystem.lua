@@ -31,8 +31,8 @@ function PlayerControlSystem:process(e, dt)
         end        
     end
 
-    e.x = e.x + inputX * e.speed * dt
-    e.y = e.y + inputY * e.speed * dt
+    e.pos.x = e.pos.x + inputX * e.speed * dt
+    e.pos.y = e.pos.y + inputY * e.speed * dt
 end
 
 return PlayerControlSystem 
