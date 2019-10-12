@@ -1,7 +1,10 @@
 -- Inne
 peachy = require("Libraries/peachy-master/peachy")
 iffy = require('Libraries/iffy-master/iffy')
+bump = require('Libraries/bump-master/bump')
 Camera = require("Libraries/hump-master/camera")
+
+require("src/functions")
 
 -- InputManager
 baton = require('Libraries/baton-master/baton')
@@ -12,7 +15,7 @@ Input = baton.new {
 	  right = {'key:right', 'key:d', 'axis:leftx+', 'button:dpright'},
 	  up = {'key:up', 'key:w', 'axis:lefty-', 'button:dpup'},
 	  down = {'key:down', 'key:s', 'axis:lefty+', 'button:dpdown'},
-	  action = {'key:x', 'button:a'},
+	  action = {'key:x', 'button:a'}
 	},
 	pairs = {
 	  move = {'left', 'right', 'up', 'down'}
@@ -21,7 +24,6 @@ Input = baton.new {
   }
 
 -- ECS
-Class = require("Libraries/hump-master/class")
 tiny = require("Libraries/tiny-ecs-master/tiny")
 drawSystemFilter = tiny.requireAll("isDrawingSystem")
 updateSystemFilter = tiny.rejectAll("isDrawingSystem")
@@ -35,17 +37,19 @@ require("src/states/GameOverState")
 
 -- GLOBALNE
 assets = {}
+bumpWorld = nil
+tileSize = 32
 
 function love.load()
 	-- Wczytywanie assetów
 	assets = require("src/assets")
 
 	-- Wczytywanie Tilesetów i tilemap
-	iffy.newTileset("Testset", "Assets/Tilemaps/TestTile.png")
-    iffy.newTilemap("Testmap", "Assets/Tilemaps/TestMap.csv") 
+	iffy.newTileset("TestSet", "Assets/Tilemaps/test-tileset.png")
+    iffy.newTilemap("TestLevel", "Assets/Tilemaps/TestLevel.csv") 
 	
 	GameState.registerEvents()
-	GameState.switch(TestLevelState)
+	GameState.switch(MenuState)
 end
 
 function love.update(dt)

@@ -1,6 +1,6 @@
 local TestLevelTileMap = {
-    tilemap = "Testmap",
-    tileset = "Testset"
+    tilemap = "TestLevel",
+    tileset = "TestSet"
 }
 
 return TestLevelTileMap
