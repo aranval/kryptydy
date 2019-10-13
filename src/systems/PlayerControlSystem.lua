@@ -1,6 +1,6 @@
-local PlayerControlSystem  = tiny.processingSystem()
+local PlayerControlSystem  = libs.tiny.processingSystem()
 
-PlayerControlSystem.filter = tiny.requireAll("controlable")
+PlayerControlSystem.filter = libs.tiny.requireAll("controlable")
 
 local function movement(e, dt) 
     local inputX, inputY = Input:get("move")
@@ -85,7 +85,6 @@ local function interact(e, dt)
             else 
                 item.animationTag = "Idle"
             end
-            print(item.name)
         end        
     end
 end

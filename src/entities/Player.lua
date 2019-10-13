@@ -1,23 +1,16 @@
-local Player = {
-    name = "Player",
-    isPlayer = true,
-    pos = {
-        x = 0,
-        y = 0
-    },
-    collider = {
-        isTrigger = false,
-        width = 32,
-        height = 32
-    },    
-    speed = 32*5,
-    animation = assets.anim_Player,
-    animationTag = "Up",
-    direction = "Up", 
-    isHorizontalMove = true,
-    
-    controlable = true
+local Player = libs.class{
+    init = function(self, x, y)
+        self.name = "Player"
+        self.isPlayer = true
+        self.pos = libs.vector(x or 0, y or 0)
+        self.collider = classes.collider(32, 32)
+        self.speed = 32*5
+        self.animation = assets.anim_Player
+        self.animationTag = "Up"
+        self.direction = "Up"
+        self.isHorizontalMove = true
+        
+        self.controlable = true
+    end
 }
-
-
 return Player

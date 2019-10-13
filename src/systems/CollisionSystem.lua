@@ -1,6 +1,6 @@
-local CollisionSystem = tiny.processingSystem()
+local CollisionSystem = libs.tiny.processingSystem()
 
-CollisionSystem.filter = tiny.requireAll("collider")
+CollisionSystem.filter = libs.tiny.requireAll("collider")
 
 local function collisionFilter(e1, e2)
     if not e1.collider or not e2.collider then

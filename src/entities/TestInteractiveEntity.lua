@@ -1,16 +1,16 @@
-local TestInteractiveEntity = {
-    name = "Interactive",
-    pos = {
-        x = 0, y = 0
-    },
-    collider = {
-        isTrigger = false,
-        width = 32,
-        height = 32
-    },
-    animation = assets.anim_InteractTest1,
-    animationTag = "Idle",
+local TestInteractiveEntity = libs.class{
+    init = function(self, x, y, animation)
+        nilError("animation", animation)
 
-    isInteractive = true
-}  
+        self.anim = "anim"
+        self.name = "Interactive"
+        self.pos = libs.vector(x or 0, y or 0)
+        self.collider = classes.collider(32, 32)
+        self.animation = animation
+        self.animationTag = "Idle"
+
+        self.isInteractive = true
+    end
+}
+
 return TestInteractiveEntity

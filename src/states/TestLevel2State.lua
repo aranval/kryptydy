@@ -1,25 +1,16 @@
-TestLevel2State = {}
+local TestLevel2State = {}
 
 function TestLevel2State:enter(prev)
-    self.playerEntity = require("src/entities/Player")
-    local tilemapEntity = require("src/entities/TileMap")
     local startup = "Assets/Tilemaps/TestLevel2_Startup.csv"
-
-    tilemapEntity.tilemap = "TestLevel2"
-    tilemapEntity.tileset = "TestSet"
+    bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world    
+    generateCollisionsFromStartup(startup, bumpWorld, tileSize)
 
     gotoState = nil
-    -- Collisions Init 
-    -- bump world musi być stworzony przed tiny world
-    bumpWorld = bump.newWorld()
-    
-    generateCollisionsFromStartup(startup, bumpWorld, tileSize)    
-    self.playerEntity.pos.x, self.playerEntity.pos.y = getPlayerPositionFromStartup(startup, tileSize)
-
+    self.playerEntity = entities.player(getPlayerPositionFromStartup(startup, tileSize))
     self.debugDraw = prev.debugDraw or false
-    self.camera = Camera(self.playerEntity.pos.x ,self.playerEntity.pos.y)
-    self.cameraSmoother = Camera.smooth.damped(5)
-    tiny.add(tinyWorld,
+    self.camera = libs.camera(self.playerEntity.pos.x ,self.playerEntity.pos.y)
+    self.cameraSmoother = libs.camera.smooth.damped(cameraSpeed)
+    libs.tiny.add(tinyWorld,
         require("src/systems/TileMapDrawSystem"),
 
         require("src/systems/PlayerControlSystem"),
@@ -29,20 +20,20 @@ function TestLevel2State:enter(prev)
         require("src/systems/AnimationDrawSystem"),
         
         self.playerEntity,
-        tilemapEntity,
+        entities.tilemap("TestLevel2", "TestSet"),
         getEntitiesFromStartup(startup, tileSize)
     )
 end
 
 function TestLevel2State:leave()
-    tiny.clearEntities(tinyWorld)
-    tiny.clearSystems(tinyWorld)
-    tiny.refresh(tinyWorld)
+    libs.tiny.clearEntities(tinyWorld)
+    libs.tiny.clearSystems(tinyWorld)
+    libs.tiny.refresh(tinyWorld)
 end
 
 function TestLevel2State:update(dt)
     if gotoState then
-        GameState.switch(gotoState)
+        libs.gameState.switch(gotoState)
     end
 
     tinyWorld:update(dt, updateSystemFilter)
@@ -64,3 +55,5 @@ function TestLevel2State:draw()
 
     self.camera:detach()    
 end
+
+return TestLevel2State

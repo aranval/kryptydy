@@ -1,10 +1,10 @@
-local TileMapDrawSystem = tiny.processingSystem()
+local TileMapDrawSystem = libs.tiny.processingSystem()
 TileMapDrawSystem.isDrawingSystem = true
 
-TileMapDrawSystem.filter = tiny.requireAll("tilemap", "tileset")
+TileMapDrawSystem.filter = libs.tiny.requireAll("tilemap", "tileset")
 
 function TileMapDrawSystem:process(e, dt)
-    iffy.drawTilemap(e.tilemap, e.tileset, 1)
+    libs.iffy.drawTilemap(e.tilemap, e.tileset, 1)
 end
 
 return TileMapDrawSystem

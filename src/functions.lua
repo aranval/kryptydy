@@ -37,7 +37,6 @@ function generateCollisionsFromStartup(startup, bumpWorld, tileSize)
             if(tonumber(tile_no) == colliderIndex) then
                 bumpWorld:add({name = "Tile"}, x*32, y*32, tileSize, tileSize)
             end
-            
             x = x + 1
         end
         y = y + 1
@@ -65,47 +64,24 @@ function getEntitiesFromStartup(startup, tileSize)
         x=0
         for tile_no in line:gmatch("[^,]+") do
             if tonumber(tile_no) == goToTestLevel1 then
-                local e = tableCopy(require("src/entities/TriggerGoToOtherState"))
-                e.stateTable = TestLevelState
-                e.pos.x = x * tileSize
-                e.pos.y = y * tileSize
-                ret[#ret+1] = e
+                ret[#ret+1] = entities.gotoState(x * tileSize, y * tileSize, states.testLevel1)
             end
             if tonumber(tile_no) == goToTestLevel2 then                
-                local e = tableCopy(require("src/entities/TriggerGoToOtherState"))
-                e.stateTable = TestLevel2State
-                e.pos.x = x * tileSize
-                e.pos.y = y * tileSize
-                ret[#ret+1] = e
+                ret[#ret+1] = entities.gotoState(x * tileSize, y * tileSize, states.testLevel2)
             end
             if tonumber(tile_no) == testInteractiveEntity1 then                
-                local e = require("src/entities/TestInteractiveEntity")
-                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
-                e.pos.x = x * tileSize
-                e.pos.y = y * tileSize
-                e.animationTag = "Idle"
-                ret[#ret+1] = e
+                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest1)
             end
             if tonumber(tile_no) == testInteractiveEntity2 then                
-                local e = require("src/entities/TestInteractiveEntity2")
-                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
-                e.pos.x = x * tileSize
-                e.pos.y = y * tileSize
-                e.animationTag = "Idle"
-                ret[#ret+1] = e
+                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest2)
             end
             if tonumber(tile_no) == testInteractiveEntity3 then                
-                local e = require("src/entities/TestInteractiveEntity3")
-                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
-                e.pos.x = x * tileSize
-                e.pos.y = y * tileSize
-                e.animationTag = "Idle"
-                ret[#ret+1] = e
+                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest3)
             end
             x = x + 1
         end
         y = y + 1
-    end    
+    end
     return unpack(ret)
 end
 
@@ -124,5 +100,11 @@ function debugDraw(isTrue)
             love.graphics.setColor(255,255,255)
             
         end
+    end
+end
+
+function nilError(name, value) 
+    if(value == nil) then
+        error(name .. " is nil")
     end
 end

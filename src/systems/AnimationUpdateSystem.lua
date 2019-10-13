@@ -1,6 +1,6 @@
-local AnimationUpdateSystem = tiny.processingSystem()
+local AnimationUpdateSystem = libs.tiny.processingSystem()
 
-AnimationUpdateSystem.filter = tiny.requireAll("animation")
+AnimationUpdateSystem.filter = libs.tiny.requireAll("animation")
 
 function AnimationUpdateSystem:process(e, dt)
     e.animation:update(dt)

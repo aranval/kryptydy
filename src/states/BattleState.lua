@@ -1,4 +1,4 @@
-BattleState = {}
+local BattleState = {}
 
 function BattleState:init()
 
@@ -11,3 +11,5 @@ end
 function BattleState:draw()
     
 end
+
+return BattleState

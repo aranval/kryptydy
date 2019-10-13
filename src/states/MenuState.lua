@@ -1,13 +1,15 @@
-MenuState = {}
+local MenuState = {}
 
 function MenuState:init()
     
 end
 
 function MenuState:update()
-    GameState.switch(TestLevelState)
+    libs.gameState.switch(states.testLevel1)
 end
 
 function MenuState:draw()
     
 end
+
+return MenuState
