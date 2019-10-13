@@ -70,20 +70,30 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
+   },
+   {
+    "filename": "TestAnim 8.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 500
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.15-x64",
-  "image": "TestAnim.png",
+  "image": "Player.png",
   "format": "RGBA8888",
-  "size": { "w": 256, "h": 32 },
+  "size": { "w": 288, "h": 32 },
   "scale": "1",
   "frameTags": [
-   { "name": "Up", "from": 0, "to": 1, "direction": "forward" },
-   { "name": "Right", "from": 2, "to": 3, "direction": "forward" },
-   { "name": "Down", "from": 4, "to": 5, "direction": "forward" },
-   { "name": "Left", "from": 6, "to": 7, "direction": "forward" }
+   { "name": "Idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "Up", "from": 1, "to": 2, "direction": "forward" },
+   { "name": "Right", "from": 3, "to": 4, "direction": "forward" },
+   { "name": "Down", "from": 5, "to": 6, "direction": "forward" },
+   { "name": "Left", "from": 7, "to": 8, "direction": "forward" }
   ],
   "layers": [
    { "name": "Background", "opacity": 255, "blendMode": "normal" }

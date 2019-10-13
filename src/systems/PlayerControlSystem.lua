@@ -1,9 +1,14 @@
+-- TODO:
+-- Do roździelenia na PlayerControlSystem i MovementSystem
+-- Poprawa animacji 
+-- Poprawa zmiany kierunku
+
 local PlayerControlSystem  = libs.tiny.processingSystem()
 
 PlayerControlSystem.filter = libs.tiny.requireAll("controlable")
 
-local function movement(e, dt) 
-    local inputX, inputY = Input:get("move")
+local function movementInput(e, dt) 
+    local input = libs.vector(Input:get("move"))
 
     if(Input:pressed("left") or Input:pressed("right") or Input:released("up") or Input:released("down")) then
         e.isHorizontalMove = true
@@ -12,28 +17,89 @@ local function movement(e, dt)
     end
 
     if e.isHorizontalMove then
-        inputY = 0  
-        if inputX > 0 then 
-            inputX = 1
+        input.y = 0  
+        if input.x > 0 then 
+            input.x = 1
             e.direction = "Right"
-        elseif inputX < 0 then
-            inputX = -1
+        elseif input.x < 0 then
+            input.x = -1
             e.direction = "Left"
         end
     else
-        inputX = 0
-        if inputY > 0 then
-            inputY = 1
+        input.x = 0
+        if input.y > 0 then
+            input.y = 1
             e.direction = "Down"
-        elseif inputY < 0 then
-            inputY = -1
+        elseif input.y < 0 then
+            input.y = -1
             e.direction = "Up"
         end        
     end
 
-    e.animationTag = e.direction
-    e.pos.x = e.pos.x + inputX * e.speed * dt
-    e.pos.y = e.pos.y + inputY * e.speed * dt
+    if(input:len() > 0) then
+        e.animationTag = e.direction
+        e.nextPos = e.nextPos + input * tileSize
+        e.isMoving = true
+    end
+end
+
+local function movementFilter(e)
+    if e.isPlayer then
+        return false
+    end
+    if not e.collider == nil and e.collider.isTrigger then
+        return false
+    end
+    return true
+end
+
+local function movement(e, dt)
+       
+    local nextX, nextY = e.nextPos:unpack()
+    local items, len = bumpWorld:queryPoint(nextX+tileSize*.5, nextY+tileSize*.5, movementFilter)
+
+    print(len)
+    print(e.nextPos)
+
+    if len > 0 then 
+        e.isMoving = false
+        e.animationTag = "Idle"
+        e.nextPos = e.currentPos
+    else
+        local dir = (e.nextPos - e.currentPos):normalized() 
+        e.pos = e.pos + dir * e.speed * dt
+
+        if e.direction == "Up" then
+            if e.pos.y < e.nextPos.y then
+                e.currentPos = e.nextPos
+                e.pos.y = e.nextPos.y
+                e.isMoving = false
+                e.animationTag = "Idle"
+            end
+        elseif e.direction == "Down" then
+            if e.pos.y > e.nextPos.y then
+                e.currentPos = e.nextPos
+                e.pos.y = e.nextPos.y
+                e.isMoving = false
+                e.animationTag = "Idle"
+            end
+        elseif e.direction == "Left" then
+            if e.pos.x < e.nextPos.x then
+                e.currentPos = e.nextPos
+                e.pos.x = e.nextPos.x
+                e.isMoving = false
+                e.animationTag = "Idle"
+            end
+        elseif e.direction == "Right" then
+            if e.pos.x > e.nextPos.x then
+                e.currentPos = e.nextPos
+                e.pos.x = e.nextPos.x
+                e.isMoving = false
+                e.animationTag = "Idle"
+            end
+        end
+    end
+    
 end
 
 local function interactFilter(e) 
@@ -90,7 +156,11 @@ local function interact(e, dt)
 end
 
 function PlayerControlSystem:process(e, dt)
-    movement(e, dt)
+    if not e.isMoving then
+        movementInput(e, dt)
+    else 
+        movement(e, dt)
+    end
     interact(e, dt)
 end
 
