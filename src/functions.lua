@@ -4,6 +4,10 @@ playerIndex = 2
 goToTestLevel1 = 3
 goToTestLevel2 = 4
 
+testInteractiveEntity1 = 5
+testInteractiveEntity2 = 6
+testInteractiveEntity3 = 7
+
 function tableCopy(orig)
     local orig_type = type(orig)
     local copy
@@ -17,6 +21,12 @@ function tableCopy(orig)
         copy = orig
     end
     return copy
+end
+
+function distance(x1, y1, x2, y2)
+    local dx = x1 - x2
+    local dy = y1 - y2
+    return math.sqrt (dx * dx + dy * dy)
 end
 
 function generateCollisionsFromStartup(startup, bumpWorld, tileSize) 
@@ -66,6 +76,30 @@ function getEntitiesFromStartup(startup, tileSize)
                 e.stateTable = TestLevel2State
                 e.pos.x = x * tileSize
                 e.pos.y = y * tileSize
+                ret[#ret+1] = e
+            end
+            if tonumber(tile_no) == testInteractiveEntity1 then                
+                local e = require("src/entities/TestInteractiveEntity")
+                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
+                e.pos.x = x * tileSize
+                e.pos.y = y * tileSize
+                e.animationTag = "Idle"
+                ret[#ret+1] = e
+            end
+            if tonumber(tile_no) == testInteractiveEntity2 then                
+                local e = require("src/entities/TestInteractiveEntity2")
+                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
+                e.pos.x = x * tileSize
+                e.pos.y = y * tileSize
+                e.animationTag = "Idle"
+                ret[#ret+1] = e
+            end
+            if tonumber(tile_no) == testInteractiveEntity3 then                
+                local e = require("src/entities/TestInteractiveEntity3")
+                e.name = "Interactive" .. "(" .. x .. "," .. y .. ")"
+                e.pos.x = x * tileSize
+                e.pos.y = y * tileSize
+                e.animationTag = "Idle"
                 ret[#ret+1] = e
             end
             x = x + 1

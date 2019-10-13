@@ -4,7 +4,9 @@ AnimationUpdateSystem.filter = tiny.requireAll("animation")
 
 function AnimationUpdateSystem:process(e, dt)
     e.animation:update(dt)
-    e.animation:setTag(e.direction);
+    if e.animationTag then
+        e.animation:setTag(e.animationTag);
+    end
 end
 
 return AnimationUpdateSystem

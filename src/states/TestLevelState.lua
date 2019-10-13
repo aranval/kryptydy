@@ -46,8 +46,7 @@ function TestLevelState:update(dt)
     end
 
     tinyWorld:update(dt, updateSystemFilter);
-    
-    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)
+    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)  
 
     if(Input:pressed("debug")) then 
         if self.debugDraw then self.debugDraw = false
@@ -57,6 +56,7 @@ end
 
 function TestLevelState:draw()
     love.graphics.print("F1 - toggle debug")
+    love.graphics.print("x - action", 0, 16)
 
     self.camera:attach() 
     tinyWorld:update(dt, drawSystemFilter);

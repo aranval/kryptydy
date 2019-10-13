@@ -12,6 +12,7 @@ local Player = {
     },    
     speed = 32*5,
     animation = assets.anim_Player,
+    animationTag = "Up",
     direction = "Up", 
     isHorizontalMove = true,
     

@@ -41,12 +41,12 @@ function TestLevel2State:leave()
 end
 
 function TestLevel2State:update(dt)
-    tinyWorld:update(dt, updateSystemFilter);
-    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)
-
     if gotoState then
         GameState.switch(gotoState)
     end
+
+    tinyWorld:update(dt, updateSystemFilter)
+    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)    
 
     if(Input:pressed("debug")) then 
         if self.debugDraw then self.debugDraw = false
