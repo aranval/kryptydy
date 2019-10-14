@@ -124,12 +124,7 @@ local function interact(e, dt)
                 end
             end   
 
-            -- Iterakcja z najbliższym obiektem
-            if item.animationTag == "Idle" then
-                item.animationTag = "Interact"
-            else 
-                item.animationTag = "Idle"
-            end
+            item:interact() -- wywołanie funkcji intaract z Entity
         end        
     end
 end
@@ -148,7 +143,14 @@ function PlayerControlSystem:process(e, dt)
     if e.isMoving then
         movement(e, dt)
     end
-    interact(e, dt)
+
+    -- Talkies i interakcje
+    if not libs.talkies.isOpen() then
+        interact(e, dt)
+    end
+    if Input:pressed("action") then
+		libs.talkies.onAction()
+	end
 end
 
 return PlayerControlSystem 

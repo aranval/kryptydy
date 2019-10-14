@@ -1,4 +1,4 @@
-local TestInteractiveEntity = libs.class{
+local TestNPC = libs.class{
     init = function(self, x, y, animation)
         nilError("animation", animation)
 
@@ -10,7 +10,17 @@ local TestInteractiveEntity = libs.class{
         self.animationTag = "Idle"
 
         self.isInteractive = true
+    end,
+    interact = function(self)
+        print(self )
+        libs.talkies.say("Position", "X: ".. self.pos.x .. ", Y: " .. self.pos.y, {
+            oncomplete = function(dialog) 
+                self.animationTag = "Idle"
+            end
+        })
+
+        self.animationTag = "Interact"
     end
 }
 
-return TestInteractiveEntity
+return TestNPC

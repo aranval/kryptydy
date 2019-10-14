@@ -10,5 +10,6 @@ libs.iffy = require('Libraries/iffy-master/iffy')
 libs.bump = require('Libraries/bump-master/bump')
 libs.baton = require('Libraries/baton-master/baton')
 libs.tiny = require("Libraries/tiny-ecs-master/tiny")
+libs.talkies = require("Libraries/talkies")
 
 return libs

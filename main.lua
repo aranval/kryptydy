@@ -44,7 +44,9 @@ function love.load()
 	-- Wczytywanie assetów
 	assets = require("src/assets")
 
-	-- Wczytywanie Tilesetów i tilemap
+	-- talkies Init
+
+	-- iffy Init Wczytywanie Tilesetów i tilemap
 	libs.iffy.newTileset("TestSet", "Assets/Tilemaps/test-tileset.png")
     libs.iffy.newTilemap("TestLevel1", "Assets/Tilemaps/TestLevel_Map.csv") 
     libs.iffy.newTilemap("TestLevel2", "Assets/Tilemaps/TestLevel2_Map.csv") 
@@ -55,6 +57,7 @@ end
 
 function love.update(dt)
 	Input:update()
+	libs.talkies.update(dt)
 
 	if(Input:pressed("f1")) then 
         if drawDebug then drawDebug = false

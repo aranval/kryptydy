@@ -5,6 +5,6 @@ entities.tilemap = require("src/entities/Tilemap")
 entities.gotoState = require("src/entities/TriggerGoToOtherState")
 
 -- Test
-entities.testInteractive = require("src/entities/TestInteractiveEntity")
+entities.testNPC = require("src/entities/TestNPC")
 
 return entities

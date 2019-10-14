@@ -4,9 +4,9 @@ playerIndex = 2
 goToTestLevel1 = 3
 goToTestLevel2 = 4
 
-testInteractiveEntity1 = 5
-testInteractiveEntity2 = 6
-testInteractiveEntity3 = 7
+testNPC1 = 5
+testNPC2 = 6
+testNPC3 = 7
 
 function tableCopy(orig)
     local orig_type = type(orig)
@@ -69,14 +69,14 @@ function getEntitiesFromStartup(startup, tileSize)
             if tonumber(tile_no) == goToTestLevel2 then                
                 ret[#ret+1] = entities.gotoState(x * tileSize, y * tileSize, states.testLevel2)
             end
-            if tonumber(tile_no) == testInteractiveEntity1 then                
-                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest1)
+            if tonumber(tile_no) == testNPC1 then                
+                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest1)
             end
-            if tonumber(tile_no) == testInteractiveEntity2 then                
-                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest2)
+            if tonumber(tile_no) == testNPC2 then                
+                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest2)
             end
-            if tonumber(tile_no) == testInteractiveEntity3 then                
-                ret[#ret+1] = entities.testInteractive(x * tileSize, y * tileSize, assets.anim_InteractTest3)
+            if tonumber(tile_no) == testNPC3 then                
+                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest3)
             end
             x = x + 1
         end

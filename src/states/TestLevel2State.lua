@@ -58,6 +58,9 @@ function TestLevel2State:draw()
 
     self.camera:detach()    
 
+    -- Okno dialogowe
+    libs.talkies:draw()
+
     -- DEBUG
     love.graphics.print("F1 - rysowanie kolizji")
 	love.graphics.print("F2 - kamera na srodku", 0, 16)
