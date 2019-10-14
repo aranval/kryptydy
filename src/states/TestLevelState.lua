@@ -7,8 +7,12 @@ function TestLevelState:enter(prev)
 
     gotoState = nil
     self.playerEntity = entities.player(getPlayerPositionFromStartup(startup, tileSize))
-    self.debugDraw = prev.debugDraw or false
-    self.camera = libs.camera(self.playerEntity.pos.x ,self.playerEntity.pos.y)
+    local camX, camY = self.playerEntity.pos:unpack()
+    if camCenterDebug then -- DEBUG
+        camX = 320
+        camY = 320
+    end -- DEBUG
+    self.camera = libs.camera(camX ,camY)
     self.cameraSmoother = libs.camera.smooth.damped(cameraSpeed)
     libs.tiny.add(tinyWorld,
         require("src/systems/TileMapDrawSystem"),
@@ -37,24 +41,26 @@ function TestLevelState:update(dt)
     end
 
     tinyWorld:update(dt, updateSystemFilter);
-    self.camera:lockPosition(self.playerEntity.pos.x, self.playerEntity.pos.y, self.cameraSmoother)  
-
-    if(Input:pressed("debug")) then 
-        if self.debugDraw then self.debugDraw = false
-        elseif not self.debugDraw then self.debugDraw = true end
-    end
+    local camX, camY = self.playerEntity.pos:unpack()
+    if camCenterDebug then -- DEBUG
+        camX = 320
+        camY = 320
+    end -- DEBUG
+    self.camera:lockPosition(camX, camY, self.cameraSmoother) 
 end
 
 function TestLevelState:draw()
-    love.graphics.print("F1 - toggle debug")
-    love.graphics.print("x - action", 0, 16)
-
     self.camera:attach() 
     tinyWorld:update(dt, drawSystemFilter);
 
-    debugDraw(self.debugDraw) 
+    debugDraw(drawDebug) -- DEBUG
 
     self.camera:detach()    
+
+    -- DEBUG
+    love.graphics.print("F1 - rysowanie kolizji")
+	love.graphics.print("F2 - kamera na srodku", 0, 16)
+    love.graphics.print("x - akcja", 0, 32)
 end
 
 return TestLevelState

@@ -25,16 +25,24 @@ function CollisionSystem:onAdd(e)
 end
 
 function CollisionSystem:process(e, dt)
-    local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
+    if e.pos and e.isMoving then
+        local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
 
-    e.pos.x = actualX
-    e.pos.y = actualY
+        e.pos.x = actualX
+        e.pos.y = actualY
 
-    for i=1,len do
-        if(cols[i].other.collider and cols[i].other.collider.isTrigger) then
-            triggerActions(cols[i].other)
+        if len > 0 then
+            e.isMoving = false
+            e.nextPos = e.currentPos
+            e.pos = e.currentPos
         end
-    end
+
+        for i=1,len do
+            if(cols[i].other.collider and cols[i].other.collider.isTrigger) then
+                triggerActions(cols[i].other)
+            end
+        end
+    end    
 end
 
 return CollisionSystem

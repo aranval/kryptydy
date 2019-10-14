@@ -6,12 +6,15 @@ entities = require("src/entities")
 states = require("src/states")
 systems = require("src/systems")
 
-cameraSpeed = 5
+cameraSpeed = 3.1
 assets = {}
 bumpWorld = nil
 tinyWorld = libs.tiny.world()
 tileSize = 32
 gotoState = nil
+-- Debug
+camCenterDebug = false
+drawDebug = false
 
 require("src/functions")
 
@@ -23,7 +26,8 @@ Input = libs.baton.new {
 	  up = {'key:up', 'key:w', 'axis:lefty-', 'button:dpup'},
 	  down = {'key:down', 'key:s', 'axis:lefty+', 'button:dpdown'},
 	  action = {'key:x', 'button:a'},
-	  debug = {'key:f1'}
+	  f1 = {'key:f1'},
+	  f2 = {'key:f2'}
 	},
 	pairs = {
 	  move = {'left', 'right', 'up', 'down'}
@@ -51,4 +55,13 @@ end
 
 function love.update(dt)
 	Input:update()
+
+	if(Input:pressed("f1")) then 
+        if drawDebug then drawDebug = false
+        elseif not drawDebug then drawDebug = true end
+	end
+	if(Input:pressed("f2")) then 
+        if camCenterDebug then camCenterDebug = false
+        elseif not camCenterDebug then camCenterDebug = true end
+    end
 end
