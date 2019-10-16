@@ -5,16 +5,17 @@ classes = require("src/classes")
 entities = require("src/entities")
 states = require("src/states")
 systems = require("src/systems")
+CONST = require("src/constants")
 
-cameraSpeed = 3.1
-assets = {}
 bumpWorld = nil
 tinyWorld = libs.tiny.world()
 tileSize = 32
 gotoState = nil
+assets = {}
 -- Debug
 camCenterDebug = false
 drawDebug = false
+
 
 require("src/functions")
 

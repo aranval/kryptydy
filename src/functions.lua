@@ -23,26 +23,6 @@ function tableCopy(orig)
     return copy
 end
 
-function distance(x1, y1, x2, y2)
-    local dx = x1 - x2
-    local dy = y1 - y2
-    return math.sqrt (dx * dx + dy * dy)
-end
-
-function generateCollisionsFromStartup(startup, bumpWorld, tileSize) 
-    local x, y = 0, 0
-    for line in love.filesystem.lines(startup)  do
-        x=0
-        for tile_no in line:gmatch("[^,]+") do            
-            if(tonumber(tile_no) == colliderIndex) then
-                bumpWorld:add({name = "Tile"}, x*32, y*32, tileSize, tileSize)
-            end
-            x = x + 1
-        end
-        y = y + 1
-    end
-end
-
 function getPlayerPositionFromStartup(startup, tileSize) 
     local x, y = 0, 0
     for line in love.filesystem.lines(startup) do
@@ -63,20 +43,25 @@ function getEntitiesFromStartup(startup, tileSize)
     for line in love.filesystem.lines(startup) do
         x=0
         for tile_no in line:gmatch("[^,]+") do
+            local posX, posY = x * tileSize, y * tileSize
+
+            if(tonumber(tile_no) == colliderIndex) then
+                ret[#ret+1] = entities.tileCollider(posX, posY)
+            end
             if tonumber(tile_no) == goToTestLevel1 then
-                ret[#ret+1] = entities.gotoState(x * tileSize, y * tileSize, states.testLevel1)
+                ret[#ret+1] = entities.gotoState(posX, posY, states.testLevel1)
             end
             if tonumber(tile_no) == goToTestLevel2 then                
-                ret[#ret+1] = entities.gotoState(x * tileSize, y * tileSize, states.testLevel2)
+                ret[#ret+1] = entities.gotoState(posX, posY, states.testLevel2)
             end
             if tonumber(tile_no) == testNPC1 then                
-                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest1)
+                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest1)
             end
             if tonumber(tile_no) == testNPC2 then                
-                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest2)
+                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest2)
             end
             if tonumber(tile_no) == testNPC3 then                
-                ret[#ret+1] = entities.testNPC(x * tileSize, y * tileSize, assets.anim_InteractTest3)
+                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest3)
             end
             x = x + 1
         end

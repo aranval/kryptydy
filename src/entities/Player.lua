@@ -5,18 +5,20 @@ local Player = libs.class{
         self.name = "Player"
         self.isPlayer = true
         self.pos = libs.vector(l, t)
-        self.currentPos = libs.vector(l, t)
-        self.nextPos = libs.vector(l, t)
         self.collider = classes.collider(32, 32)
-        self.speed = 32*5
-
         self.animation = assets.anim_Player
-        self.animationTag = "Idle"
-        self.direction = "Up"
-        self.isHorizontalMove = true
+        self.animationTag = "Idle"  
+
+        -- Movement
+        self.currentPos = libs.vector(l, t)
+        self.nextPos = libs.vector(l, t)        
+        self.speed = CONST.playerSpeed
         self.isMoving = false
+        self.direction = "Up"
         
+        -- Input
         self.controlable = true
+        self.isHorizontalMove = true
     end
 }
 return Player

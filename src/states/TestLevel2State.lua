@@ -2,8 +2,7 @@ local TestLevel2State = {}
 
 function TestLevel2State:enter(prev)
     local startup = "Assets/Tilemaps/TestLevel2_Startup.csv"
-    bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world    
-    generateCollisionsFromStartup(startup, bumpWorld, tileSize)
+    bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world
 
     gotoState = nil
     self.playerEntity = entities.player(getPlayerPositionFromStartup(startup, tileSize))
@@ -13,11 +12,13 @@ function TestLevel2State:enter(prev)
         camY = 320
     end -- DEBUG
     self.camera = libs.camera(camX ,camY)
-    self.cameraSmoother = libs.camera.smooth.damped(cameraSpeed)
+    self.cameraSmoother = libs.camera.smooth.damped(CONST.cameraSpeed)
     libs.tiny.add(tinyWorld,
+        require("src/systems/TestSystem"), -- TODO: Do usunięcia
         require("src/systems/TileMapDrawSystem"),
 
         require("src/systems/PlayerControlSystem"),
+        require("src/systems/MovementSystem"),
         require("src/systems/CollisionSystem"),
 
         require("src/systems/AnimationUpdateSystem"),

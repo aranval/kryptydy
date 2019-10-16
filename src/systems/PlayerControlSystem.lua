@@ -1,8 +1,3 @@
--- TODO:
--- Do roździelenia na PlayerControlSystem i MovementSystem
--- Poprawa animacji 
--- Poprawa zmiany kierunku
-
 local PlayerControlSystem  = libs.tiny.processingSystem()
 
 PlayerControlSystem.filter = libs.tiny.requireAll("controlable")
@@ -39,48 +34,6 @@ local function movementInput(e, dt)
     end
 end
 
-local function movementFilter(e)
-    if e.isPlayer then
-        return false
-    end
-    if e.collider and e.collider.isTrigger then
-        return false
-    end
-    return true
-end
-
-local function movement(e, dt)
-    local dir = (e.nextPos - e.currentPos):normalized() 
-    e.pos = e.pos + dir * e.speed * dt
-
-    if e.direction == "Up" then
-        if e.pos.y < e.nextPos.y then
-            e.currentPos = e.nextPos
-            e.pos.y = e.nextPos.y
-            e.isMoving = false
-        end
-    elseif e.direction == "Down" then
-        if e.pos.y > e.nextPos.y then
-            e.currentPos = e.nextPos
-            e.pos.y = e.nextPos.y
-            e.isMoving = false
-        end
-    elseif e.direction == "Left" then
-        if e.pos.x < e.nextPos.x then
-            e.currentPos = e.nextPos
-            e.pos.x = e.nextPos.x
-            e.isMoving = false
-        end
-    elseif e.direction == "Right" then
-        if e.pos.x > e.nextPos.x then
-            e.currentPos = e.nextPos
-            e.pos.x = e.nextPos.x
-            e.isMoving = false
-        end
-    end
-    
-end
-
 local function interactFilter(e) 
     return e.isInteractive
 end
@@ -115,9 +68,9 @@ local function interact(e, dt)
 
         if len > 0 then
             local item = items[1]
-            local minDist = distance(e.pos.x, e.pos.y, item.pos.x, item.pos.y)
+            local minDist = e.pos:dist(item.pos)--vector.distance(e.pos.x, e.pos.y, item.pos.x, item.pos.y)
             for i = 2, len do 
-                local dist = distance(e.pos.x, e.pos.y, items[i].pos.x, items[i].pos.y)
+                local dist = e.pos:dist(item[i].pos)--distance(e.pos.x, e.pos.y, items[i].pos.x, items[i].pos.y)
                 if dist < minDist then
                     item = items[i]
                     minDist = dist
@@ -138,10 +91,6 @@ function PlayerControlSystem:process(e, dt)
 
     if not e.isMoving then
         movementInput(e, dt)
-    end
-    
-    if e.isMoving then
-        movement(e, dt)
     end
 
     -- Talkies i interakcje

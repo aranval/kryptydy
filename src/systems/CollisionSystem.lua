@@ -14,6 +14,11 @@ local function collisionFilter(e1, e2)
     return "slide"
 end
 
+local function queryFilter(e)
+    local bool = not e.collider.isTrigger
+    return bool
+end
+
 local function triggerActions(trigger)
     if trigger.isGoto then
         gotoState = trigger.stateTable
@@ -25,22 +30,30 @@ function CollisionSystem:onAdd(e)
 end
 
 function CollisionSystem:process(e, dt)
-    if e.pos and e.isMoving then
-        local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
-
-        e.pos.x = actualX
-        e.pos.y = actualY
-
-        if len > 0 then
-            e.isMoving = false
-            e.nextPos = e.currentPos
-            e.pos = e.currentPos
+    if e.isMoving then
+        -- Sprawdza czy może się poruszyć
+        local items, len = bumpWorld:queryRect(e.nextPos.x, e.nextPos.y, e.collider.width, e.collider.width, queryFilter)
+        for i=1,len do
+            if items[i] ~= e then
+                e.isMoving = false
+                e.nextPos = e.currentPos:clone()
+                e.pos = e.currentPos:clone()
+                return nil
+            end 
         end
 
+        -- Poruszanie 
+        local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
+
+        -- Triggery
         for i=1,len do
             if(cols[i].other.collider and cols[i].other.collider.isTrigger) then
                 triggerActions(cols[i].other)
+            else
+                -- W tablicy kolizji nie powinno znajdować się nic poza triggerami
+                print("Something wrong with collision")
             end
+
         end
     end    
 end
