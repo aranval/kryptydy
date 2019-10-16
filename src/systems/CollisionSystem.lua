@@ -19,8 +19,8 @@ local function queryFilter(e)
     return bool
 end
 
-local function triggerActions(trigger)
-    if trigger.isGoto then
+local function triggerActions(e, trigger)
+    if trigger.isGoto and e.isPlayer then
         gotoState = trigger.stateTable
     end
 end
@@ -46,9 +46,10 @@ function CollisionSystem:process(e, dt)
         local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
 
         -- Triggery
+
         for i=1,len do
             if(cols[i].other.collider and cols[i].other.collider.isTrigger) then
-                triggerActions(cols[i].other)
+                triggerActions(e, cols[i].other)
             else
                 -- W tablicy kolizji nie powinno znajdować się nic poza triggerami
                 print("Something wrong with collision")
