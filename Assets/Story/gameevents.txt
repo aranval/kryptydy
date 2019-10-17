@@ -1,0 +1,7 @@
+gs = {}
+
+gs.event1 = 0
+gs.event2 = 1
+gs.event3 = 0
+
+return gs

@@ -5,7 +5,7 @@ function TestLevel2State:enter(prev)
     bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world
 
     gotoState = nil
-    self.playerEntity = entities.player(getPlayerPositionFromStartup(startup, tileSize))
+    self.playerEntity = entities.player(getPlayerPositionFromStartup(startup, CONST.tileSize))
     local camX, camY = self.playerEntity.pos:unpack()
     if camCenterDebug then -- DEBUG
         camX = 320
@@ -26,7 +26,7 @@ function TestLevel2State:enter(prev)
         
         self.playerEntity,
         entities.tilemap("TestLevel2", "TestSet"),
-        getEntitiesFromStartup(startup, tileSize)
+        getEntitiesFromStartup(startup, CONST.tileSize)
     )
 end
 

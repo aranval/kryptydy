@@ -9,13 +9,13 @@ CONST = require("src/constants")
 
 bumpWorld = nil
 tinyWorld = libs.tiny.world()
-tileSize = 32
 gotoState = nil
+
 assets = {}
+gameEvents = {}
 -- Debug
 camCenterDebug = false
 drawDebug = false
-
 
 require("src/functions")
 
@@ -45,7 +45,8 @@ function love.load()
 	-- Wczytywanie assetów
 	assets = require("src/assets")
 
-	-- talkies Init
+	-- Story
+	gameEvents = dofile("Assets/Story/gameevents.txt")
 
 	-- iffy Init Wczytywanie Tilesetów i tilemap
 	libs.iffy.newTileset("TestSet", "Assets/Tilemaps/test-tileset.png")

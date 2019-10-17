@@ -23,6 +23,11 @@ function tableCopy(orig)
     return copy
 end
 
+function dofile (filename)
+    local f = assert(loadfile(filename))
+    return f()
+end
+
 function getPlayerPositionFromStartup(startup, tileSize) 
     local x, y = 0, 0
     for line in love.filesystem.lines(startup) do

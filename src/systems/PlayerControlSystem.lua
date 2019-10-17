@@ -27,7 +27,7 @@ local function movementInput(e, dt)
 
     if(input:len() > 0) then
         e.animationTag = e.direction
-        e.nextPos = e.nextPos + input * tileSize
+        e.nextPos = e.nextPos + input * CONST.tileSize
         e.isMoving = true
     else
         e.animationTag = "Idle"
@@ -43,34 +43,34 @@ local function interact(e, dt)
         local l, t, w, h = 0, 0, 0, 0
 
         if e.direction == "Up" then
-            l = e.pos.x - tileSize
-            t = e.pos.y - tileSize
-            w = tileSize * 3
-            h = tileSize
+            l = e.pos.x - CONST.tileSize
+            t = e.pos.y - CONST.tileSize
+            w = CONST.tileSize * 3
+            h = CONST.tileSize
         elseif e.direction == "Down" then
-            l = e.pos.x - tileSize
-            t = e.pos.y + tileSize
-            w = tileSize * 3
-            h = tileSize
+            l = e.pos.x - CONST.tileSize
+            t = e.pos.y + CONST.tileSize
+            w = CONST.tileSize * 3
+            h = CONST.tileSize
         elseif e.direction == "Left" then
-            l = e.pos.x - tileSize
-            t = e.pos.y - tileSize
-            w = tileSize
-            h = tileSize * 3
+            l = e.pos.x - CONST.tileSize
+            t = e.pos.y - CONST.tileSize
+            w = CONST.tileSize
+            h = CONST.tileSize * 3
         elseif e.direction == "Right" then
-            l = e.pos.x + tileSize
-            t = e.pos.y - tileSize
-            w = tileSize
-            h = tileSize * 3
+            l = e.pos.x + CONST.tileSize
+            t = e.pos.y - CONST.tileSize
+            w = CONST.tileSize
+            h = CONST.tileSize * 3
         end 
 
         local items, len = bumpWorld:queryRect(l,t,w,h, interactFilter)
 
         if len > 0 then
             local item = items[1]
-            local minDist = e.pos:dist(item.pos)--vector.distance(e.pos.x, e.pos.y, item.pos.x, item.pos.y)
+            local minDist = e.pos:dist(item.pos)
             for i = 2, len do 
-                local dist = e.pos:dist(item[i].pos)--distance(e.pos.x, e.pos.y, items[i].pos.x, items[i].pos.y)
+                local dist = e.pos:dist(item[i].pos)
                 if dist < minDist then
                     item = items[i]
                     minDist = dist

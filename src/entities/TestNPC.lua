@@ -32,13 +32,13 @@ local TestNPC = libs.class{
         if not self.isMoving and love.math.random(20) == 1 and self.animationTag == "Idle" then
             local rand = love.math.random(4)
             if rand == 1 then
-                self.nextPos.y = self.nextPos.y + tileSize
+                self.nextPos.y = self.nextPos.y + CONST.tileSize
             elseif rand == 2 then
-                self.nextPos.y = self.nextPos.y - tileSize
+                self.nextPos.y = self.nextPos.y - CONST.tileSize
             elseif rand == 3 then
-                self.nextPos.x = self.nextPos.x + tileSize
+                self.nextPos.x = self.nextPos.x + CONST.tileSize
             elseif rand == 4 then
-                self.nextPos.x = self.nextPos.x - tileSize
+                self.nextPos.x = self.nextPos.x - CONST.tileSize
             end
             self.isMoving = true
         end
