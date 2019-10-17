@@ -24,7 +24,8 @@ function tableCopy(orig)
 end
 
 function doFile (filename)
-    local f = assert(loadfile(filename))
+    local str = love.filesystem.read(filename)
+    local f = loadstring(str)
     return f()
 end
 
