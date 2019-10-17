@@ -1,3 +1,5 @@
+
+
 -- GLOBALNE
 libs = require("src/libs")
 
@@ -40,13 +42,12 @@ Input = libs.baton.new {
 drawSystemFilter = libs.tiny.requireAll("isDrawingSystem")
 updateSystemFilter = libs.tiny.rejectAll("isDrawingSystem")
 
-
 function love.load()
 	-- Wczytywanie assetów
 	assets = require("src/assets")
 
 	-- Story
-	gameEvents = dofile("Assets/Story/gameevents.txt")
+	gameEvents = doFile("Assets/Story/gameevents.txt")
 
 	-- iffy Init Wczytywanie Tilesetów i tilemap
 	libs.iffy.newTileset("TestSet", "Assets/Tilemaps/test-tileset.png")

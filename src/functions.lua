@@ -23,7 +23,7 @@ function tableCopy(orig)
     return copy
 end
 
-function dofile (filename)
+function doFile (filename)
     local f = assert(loadfile(filename))
     return f()
 end
@@ -60,7 +60,7 @@ function getEntitiesFromStartup(startup, tileSize)
                 ret[#ret+1] = entities.gotoState(posX, posY, states.testLevel2)
             end
             if tonumber(tile_no) == testNPC1 then                
-                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest1)
+                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest1, assets.dia_testNPC)
             end
             if tonumber(tile_no) == testNPC2 then                
                 ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest2)

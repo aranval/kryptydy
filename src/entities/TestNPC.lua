@@ -1,5 +1,5 @@
 local TestNPC = libs.class{
-    init = function(self, x, y, animation)
+    init = function(self, x, y, animation, dialogue)
         nilError("animation", animation)
         local l, t = x or 0, y or 0
 
@@ -8,6 +8,8 @@ local TestNPC = libs.class{
         self.collider = classes.collider(32, 32)
         self.animation = animation
         self.animationTag = "Idle"
+
+        self.dialogue = dialogue
 
         -- Movement
         self.currentPos = libs.vector(l, t)
@@ -19,13 +21,18 @@ local TestNPC = libs.class{
         self.isTest = true -- TODO: Do usunięcia po testach
     end,
     interact = function(self)
-        libs.talkies.say("Position", "X: ".. self.pos.x .. ", Y: " .. self.pos.y, {
-            oncomplete = function(dialog) 
-                self.animationTag = "Idle"
-            end
-        })
+        if self.dialogue then
+            local DIA = self.dialogue.chooseDialogue(gameEvents)
 
-        self.animationTag = "Interact"
+            print (self.dialogue.chooseDialogue(gameEvents))
+            libs.talkies.say("Position", "X: ".. self.pos.x .. ", Y: " .. self.pos.y, {
+                oncomplete = function(dialog) 
+                    self.animationTag = "Idle"
+                end
+            })
+
+            self.animationTag = "Interact"
+        end
     end,
     -- Test Function
     move = function(self)

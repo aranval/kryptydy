@@ -70,7 +70,7 @@ local function interact(e, dt)
             local item = items[1]
             local minDist = e.pos:dist(item.pos)
             for i = 2, len do 
-                local dist = e.pos:dist(item[i].pos)
+                local dist = e.pos:dist(items[i].pos)
                 if dist < minDist then
                     item = items[i]
                     minDist = dist

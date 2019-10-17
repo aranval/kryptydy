@@ -1,7 +1,7 @@
-gs = {}
+GE = {}
 
-gs.event1 = 0
-gs.event2 = 1
-gs.event3 = 0
+GE.event1 = 0
+GE.event2 = 0
+GE.event3 = 0
 
-return gs
+return GE

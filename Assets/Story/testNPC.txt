@@ -1,0 +1,58 @@
+local DIA = libs.class{
+    -- ge GameEvents table
+	chooseDialogue = function(ge)
+		print(ge.event1)
+		print(ge.event2)
+		print(ge.event3)
+		if(ge.event3) then
+			return diaTest4(ge)
+			
+        end
+        if(ge.event2 and not ge.event3) then
+            return self.diaTest3(ge)
+        end
+        if(ge.event1 and not ge.event2) then
+            return self.diaTest2(ge)
+		end
+		return self.diaTest1(ge)
+		
+    end,
+
+    diaTest1 = function(ge)
+        local output = {}
+        output[#output+1] = {"other", "Event1"}
+        output[#output+1] = {"self", "abc"}
+        output[#output+1] = {"other", "abc"}
+
+        ge.event1 = 1
+        return output
+    end,
+
+    diaTest2 = function(ge)
+        local output = {}
+        output[#output+1] = {"other", "Event2"}
+        output[#output+1] = {"self", "abc"}
+        output[#output+1] = {"other", "abc"}
+
+        ge.event2 = 1
+        return output
+    end,
+
+    diaTest3 = function(ge)
+        local output = {}
+        output[#output+1] = {"other", "Event3"}
+        output[#output+1] = {"self", "abc"}
+        output[#output+1] = {"other", "abc"}
+
+        ge.event3 = 1
+        return output
+    end,
+
+    diaTest4 = function(ge)
+        local output = {}
+		output[#output+1] = {"other", "Done."}
+		
+		return output
+    end,
+}
+return DIA

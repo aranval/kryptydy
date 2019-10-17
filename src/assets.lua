@@ -7,4 +7,6 @@ assets.anim_InteractTest1 = libs.peachy.new("Assets/Animations/Interact.json", l
 assets.anim_InteractTest2 = libs.peachy.new("Assets/Animations/Interact.json", love.graphics.newImage("Assets/Animations/Interact.png"), "Idle")
 assets.anim_InteractTest3 = libs.peachy.new("Assets/Animations/Interact.json", love.graphics.newImage("Assets/Animations/Interact.png"), "Idle")
 
+assets.dia_testNPC = doFile("Assets/Story/testNPC.txt")
+
 return assets
