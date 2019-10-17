@@ -22,15 +22,28 @@ local TestNPC = libs.class{
     end,
     interact = function(self)
         if self.dialogue then
-            local DIA = self.dialogue.chooseDialogue(gameEvents)
-
-            print (self.dialogue.chooseDialogue(gameEvents))
-            libs.talkies.say("Position", "X: ".. self.pos.x .. ", Y: " .. self.pos.y, {
-                oncomplete = function(dialog) 
-                    self.animationTag = "Idle"
+            local dia = self.dialogue.chooseDialogue(gameEvents)
+            local len = #dia
+            
+            for i=1, len do
+                local name = ""
+                if dia[i][1] == "self" then
+                    name = "Player"
+                else
+                    name = "NPC"
                 end
-            })
 
+                if i == len then
+                    libs.talkies.say(name, dia[i][2], {
+                        oncomplete = function(dialog) 
+                            self.animationTag = "Idle"
+                        end
+                        })
+                else
+                    libs.talkies.say(name, dia[i][2])
+                end
+            end
+            
             self.animationTag = "Interact"
         end
     end,

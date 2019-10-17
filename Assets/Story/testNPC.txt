@@ -1,12 +1,13 @@
 DIA_TEST_NPC = libs.class{
     -- ge GameEvents table
 	chooseDialogue = function(ge)
+        print("-----")
 		print(ge.event1)
 		print(ge.event2)
 		print(ge.event3)
+        print("-----")
 		if(ge.event3 > 0) then
 			return DIA_TEST_NPC.diaTest4(ge)
-			
         end
         if(ge.event2 > 0 and ge.event3 == 0) then
             return DIA_TEST_NPC.diaTest3(ge)
