@@ -1,82 +1,41 @@
-colliderIndex = 1
-playerIndex = 2
+function doFile (filename)
+    local str = love.filesystem.read(filename)
+    local f = assert(loadstring(str))
+    return f()
+end
 
-goToTestLevel1 = 3
-goToTestLevel2 = 4
-
-testNPC1 = 5
-testNPC2 = 6
-testNPC3 = 7
-
-function tableCopy(orig)
-    local orig_type = type(orig)
+function copyTable(table)
+    local table_type = type(table)
     local copy
-    if orig_type == 'table' then
+    if table_type == 'table' then
         copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            copy[tableCopy(orig_key)] = tableCopy(orig_value)
+        for table_key, table_value in next, table, nil do
+            copy[copyTable(table_key)] = copyTable(table_value)
         end
-        setmetatable(copy, tableCopy(getmetatable(orig)))
-    else -- number, string, boolean, etc
-        copy = orig
+        setmetatable(copy, copyTable(getmetatable(table)))
+    else
+        copy = table
     end
     return copy
 end
 
-function doFile (filename)
-    local str = love.filesystem.read(filename)
-    local f = loadstring(str)
-    return f()
-end
-
-function getPlayerPositionFromStartup(startup, tileSize) 
+function generateCollidersFromCSV(levelName)
+    local colliders = {}
     local x, y = 0, 0
-    for line in love.filesystem.lines(startup) do
-        x=0
+    for line in love.filesystem.lines("Assets/Levels/" .. levelName .. "_Colliders.csv") do
+        x = 0
         for tile_no in line:gmatch("[^,]+") do
-            if tonumber(tile_no) == playerIndex then
-                return x*tileSize, y*tileSize
+            if(tonumber(tile_no) == 1) then
+                colliders[#colliders+1] = require("src/entities/TileCollider")(x, y)
             end
             x = x + 1
         end
         y = y + 1
     end
+    return unpack(colliders)
 end
 
-function getEntitiesFromStartup(startup, tileSize)
-    local ret = {{}}
-    local x, y = 0, 0
-    for line in love.filesystem.lines(startup) do
-        x=0
-        for tile_no in line:gmatch("[^,]+") do
-            local posX, posY = x * tileSize, y * tileSize
-
-            if(tonumber(tile_no) == colliderIndex) then
-                ret[#ret+1] = entities.tileCollider(posX, posY)
-            end
-            if tonumber(tile_no) == goToTestLevel1 then
-                ret[#ret+1] = entities.gotoState(posX, posY, states.testLevel1)
-            end
-            if tonumber(tile_no) == goToTestLevel2 then                
-                ret[#ret+1] = entities.gotoState(posX, posY, states.testLevel2)
-            end
-            if tonumber(tile_no) == testNPC1 then                
-                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest1, assets.dia_testNPC)
-            end
-            if tonumber(tile_no) == testNPC2 then                
-                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest2)
-            end
-            if tonumber(tile_no) == testNPC3 then                
-                ret[#ret+1] = entities.testNPC(posX, posY, assets.anim_InteractTest3)
-            end
-            x = x + 1
-        end
-        y = y + 1
-    end
-    return unpack(ret)
-end
-
-function debugDraw(isTrue)
+function drawDebug(isTrue)
     if isTrue then
         local items, len = bumpWorld:getItems()
         for i=1, len do
@@ -95,7 +54,5 @@ function debugDraw(isTrue)
 end
 
 function nilError(name, value) 
-    if(value == nil) then
-        error(name .. " is nil")
-    end
+    assert(value, name .. " is nil")
 end

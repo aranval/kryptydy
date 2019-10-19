@@ -1,7 +1,11 @@
-GE = {}
+-- Plik można dowolnie modifikować. Dodając lub usuwając eventy które puźniej beda używane w dialogach do sprawdzania warunków.
+-- gameEvents i po kropce po kropce dowolna nazwa.
+-- gameEvents.nazwaEventu 
 
-GE.event1 = 0
-GE.event2 = 0
-GE.event3 = 0
+gameEvents = {}
 
-return GE
+gameEvents.event1 = 0
+gameEvents.event2 = 0
+gameEvents.event3 = 0
+
+return gameEvents

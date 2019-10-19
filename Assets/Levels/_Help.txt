@@ -1,0 +1,38 @@
+W tym momędzie dostepne entities to:
+    - Player
+    - NPC
+    - TriggerToLevel - umożliwia przejście do innego poziomu
+
+
+Niżej gotowe szalony które można wkleić do pliku info poziomu, z opisem atrybutów:
+
+
+
+TestLevel.entities.player = {
+    -- Nazwa z foldery "src/entities"
+    type = "Player"
+    -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
+    position = {1, 1}
+    -- Nazwa animacji z folderu "Assets/Animations"
+    animation = "Player"
+}
+
+TestLevel.entities.triggerToTestLevel = {
+    -- Nazwa z foldery "src/entities"
+    type = "TriggerToLevel"
+    -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
+    position = {12, 1}
+    -- Nazwa poziomu z "Assets/Levels" do którego prowadzi trigger
+    levelName = "TestLevel"
+}
+
+TestLevel.entities.npc = {
+    -- Nazwa z foldery "src/entities"
+    type = "NPC"
+    -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
+    name = "testNPC"
+    -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
+    position = {4, 4}
+    -- Nazwa animacji z folderu "Assets/Animations"
+    animation = "TestNPC"
+}

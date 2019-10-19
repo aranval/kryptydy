@@ -5,7 +5,7 @@ function MenuState:init()
 end
 
 function MenuState:update()
-    libs.gameState.switch(states.testLevel1)
+    libs.gameState.switch(states.level)
 end
 
 function MenuState:draw()

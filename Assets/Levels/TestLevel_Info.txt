@@ -1,0 +1,46 @@
+local Info = {}
+
+-- Tileset używany do rysowania tilemapy. Nazwa pliku z "Assets/Level/Tilesets"
+Info.tileset = "test"
+
+
+-- Wszystkie rzeczy jakie mają znajdować się w poziomie.
+-- Wyszystkie nazwy muszą być unikalne, nie mają wpływu na diałanie gry .
+-- Info.entities.player można zamienić na Info.entities.abc w obu przypatkach gra bedzie widziała to jako player dopóki type = "Player".
+-- Wielkość liter w "" nie ma znaczenia. "Player" i "player" działąją tak samo.
+-- Każdy entity poza "Player" może wystepować wiele razy.
+-- Każdy entity może mieć różne atrybuty.
+-- Opis dostepnych entities i ich atrybutów w pliku "Assets/Levels/Help"
+Info.entities = {}
+
+-- Player - wymagany 
+Info.entities.player = {
+    -- Nazwa z foldery "src/entities"
+    "Player",
+    -- Pozycja na mapie (x, y). Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół
+    1, 1
+}
+
+-- Triggery - przejści do innych poziomów
+Info.entities.triggerToTestLevel = {
+    -- Nazwa z foldery "src/entities"
+    "TriggerToLevel",
+    -- Pozycja na mapie (x, y). Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół
+    12, 1,
+    -- Nazwa poziomu z "Assets/Levels" do którego prowadzi trigger
+    "TestLevel"
+}
+
+-- NPC
+Info.entities.npc = {
+    -- Nazwa z foldery "src/entities"
+    "NPC",
+    -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
+    "Name",
+    -- Pozycja na mapie (x, y). Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół
+    4, 4,
+    -- Nazwa animacji z folderu "Assets/Animations"
+    "TestNPC"
+}
+
+return Info

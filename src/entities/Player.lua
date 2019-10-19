@@ -1,17 +1,21 @@
 local Player = libs.class{
     init = function(self, x, y)
-        local l, t = x or 0, y or 0
+        if x == nil then x = 0 end
+        if y == nil then y = 0 end
+
+        x = x * CONST.tileSize
+        y = y * CONST.tileSize
 
         self.name = "Player"
         self.isPlayer = true
-        self.pos = libs.vector(l, t)
+        self.position = libs.vector(x, y)
         self.collider = classes.collider(32, 32)
-        self.animation = assets.anim_Player
+        self.animation = libs.peachy.new("Assets/Animations/Player.json", love.graphics.newImage("Assets/Animations/Player.png"), "Idle")
         self.animationTag = "Idle"  
 
         -- Movement
-        self.currentPos = libs.vector(l, t)
-        self.nextPos = libs.vector(l, t)        
+        self.currentPosition = libs.vector(x, y)
+        self.nextPosition = libs.vector(x, y)  
         self.speed = CONST.playerSpeed
         self.isMoving = false
         self.direction = "Up"

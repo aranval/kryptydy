@@ -2,54 +2,53 @@ local CollisionSystem = libs.tiny.processingSystem()
 
 CollisionSystem.filter = libs.tiny.requireAll("collider")
 
-local function collisionFilter(e1, e2)
-    if not e1.collider or not e2.collider then
+local function collisionFilter(item, other)
+    if not item.collider or not other.collider then
         return "slide"
     end
     
-    if e1.collider.isTrigger or e2.collider.isTrigger then 
+    if item.collider.isTrigger or other.collider.isTrigger then 
         return "cross"
     end
 
     return "slide"
 end
 
-local function queryFilter(e)
-    local bool = not e.collider.isTrigger
-    return bool
+local function queryFilter(entity)
+    return not entity.collider.isTrigger
 end
 
-local function triggerActions(e, trigger)
-    if trigger.isGoto and e.isPlayer then
-        gotoState = trigger.stateTable
+local function triggerActions(entity, trigger)
+    if trigger.isGoto and entity.isPlayer then
+        switchToLevel = trigger.levelName
     end
 end
 
-function CollisionSystem:onAdd(e)
-    bumpWorld:add(e, e.pos.x, e.pos.y, e.collider.width, e.collider.height)
+function CollisionSystem:onAdd(entity)
+    bumpWorld:add(entity, entity.position.x, entity.position.y, entity.collider.width, entity.collider.height)
 end
 
-function CollisionSystem:process(e, dt)
-    if e.isMoving then
+function CollisionSystem:process(entity, dt)
+    if entity.isMoving then
         -- Sprawdza czy może się poruszyć
-        local items, len = bumpWorld:queryRect(e.nextPos.x, e.nextPos.y, e.collider.width, e.collider.width, queryFilter)
+        local items, len = bumpWorld:queryRect(entity.nextPosition.x, entity.nextPosition.y, entity.collider.width, entity.collider.width, queryFilter)
         for i=1,len do
-            if items[i] ~= e then
-                e.isMoving = false
-                e.nextPos = e.currentPos:clone()
-                e.pos = e.currentPos:clone()
+            if items[i] ~= entity then
+                entity.isMoving = false
+                entity.nextPosition = entity.currentPosition:clone()
+                entity.position = entity.currentPosition:clone()
                 return nil
             end 
         end
 
         -- Poruszanie 
-        local actualX, actualY, cols, len = bumpWorld:move(e, e.pos.x, e.pos.y, collisionFilter)
+        local actualX, actualY, cols, len = bumpWorld:move(entity, entity.position.x, entity.position.y, collisionFilter)
 
         -- Triggery
 
         for i=1,len do
             if(cols[i].other.collider and cols[i].other.collider.isTrigger) then
-                triggerActions(e, cols[i].other)
+                triggerActions(entity, cols[i].other)
             else
                 -- W tablicy kolizji nie powinno znajdować się nic poza triggerami
                 print("Something wrong with collision")

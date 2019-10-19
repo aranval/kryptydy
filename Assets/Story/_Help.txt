@@ -1,0 +1,21 @@
+Po dodaniu ekwipunku do gry, będzie można sprawdzać jedo zwartość lub dodować itemy po dialogu.
+Niżej przykład dialogu gotowy do wklejenia. Dialogi muszą mieć unikalną nazwe.
+
+Dialogues.nazwaDialogu = {
+    -- Warunki do spełnienia aby dialog sie wyświetlił
+    -- Można użyć:
+    -- < - mniejsze, > - większe, == - równe
+    -- and - i , or - lub
+    -- W tym momędzie dostępne tylko gameEvents z pliku "GmameEvents.txt"
+    function()
+        return gameEvents.event1 == 0
+    end,
+    -- Dialog. other - mówi npc, self - mówi gracz
+    {"other", "Mówi npc"},
+    {"self", "Mówi player"}
+    -- Funkcja wykonuje się po dialogu
+    -- Można zmienić statusu eventów
+    function() 
+        gameEvents.event1 = 1
+    end
+}

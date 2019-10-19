@@ -1,23 +1,16 @@
-
-
 -- GLOBALNE
 libs = require("src/libs")
 
 classes = require("src/classes")
-entities = require("src/entities")
 states = require("src/states")
-systems = require("src/systems")
 CONST = require("src/constants")
 
 bumpWorld = nil
 tinyWorld = libs.tiny.world()
-gotoState = nil
+tilemaps = {}
+switchToLevel = nil
 
-assets = {}
 gameEvents = {}
--- Debug
-camCenterDebug = false
-drawDebug = false
 
 require("src/functions")
 
@@ -43,16 +36,17 @@ drawSystemFilter = libs.tiny.requireAll("isDrawingSystem")
 updateSystemFilter = libs.tiny.rejectAll("isDrawingSystem")
 
 function love.load()
-	-- Wczytywanie assetów
-	assets = require("src/assets")
+	love.graphics.setDefaultFilter("nearest", "nearest")
+
+	-- Pierwszy poziom
+	switchToLevel = "TestLevel"
 
 	-- Story
-	gameEvents = doFile("Assets/Story/gameevents.txt")
+	gameEvents = doFile("Assets/Story/GameEvents.txt")
 
 	-- iffy Init Wczytywanie Tilesetów i tilemap
-	libs.iffy.newTileset("TestSet", "Assets/Tilemaps/test-tileset.png")
-    libs.iffy.newTilemap("TestLevel1", "Assets/Tilemaps/TestLevel_Map.csv") 
-    libs.iffy.newTilemap("TestLevel2", "Assets/Tilemaps/TestLevel2_Map.csv") 
+	libs.iffy.newTileset("test", "Assets/Levels/Tilesets/test.png")
+    tilemaps.TestLevel = libs.iffy.newTilemap("TestLevel", "Assets/Levels/TestLevel_Map.csv")
 	
 	libs.gameState.registerEvents()
 	libs.gameState.switch(states.menu)
@@ -61,13 +55,4 @@ end
 function love.update(dt)
 	Input:update()
 	libs.talkies.update(dt)
-
-	if(Input:pressed("f1")) then 
-        if drawDebug then drawDebug = false
-        elseif not drawDebug then drawDebug = true end
-	end
-	if(Input:pressed("f2")) then 
-        if camCenterDebug then camCenterDebug = false
-        elseif not camCenterDebug then camCenterDebug = true end
-    end
 end
