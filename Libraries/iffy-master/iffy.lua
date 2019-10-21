@@ -159,12 +159,12 @@ function iffy.newAtlas(name,url,metafile,sw,sh)
 	
 	sw,sh=sw or iffy.images[name]:getWidth(),sh or iffy.images[name]:getHeight()
 
-	local infile=io.open(metafile,'r')
+	local infile=love.filesystem.read(metafile)
 	local i,sname,x,y,width,height=1
 
 	if getExtension(metafile)=="xml" then
 		--READ XML FILE ('i' means the line number)
-		for line in love.filesystem.lines(url) do
+		for line in love.filesystem.lines(metafile) do
 			if i>1 and line~="</TextureAtlas>" then
 				
 				_, sname = string.match(line, "name=([\"'])(.-)%1")
@@ -176,14 +176,14 @@ function iffy.newAtlas(name,url,metafile,sw,sh)
 				_, y = string.match(line, "y=([\"'])(.-)%1")
 				_, width = string.match(line, "width=([\"'])(.-)%1")
 				_, height = string.match(line, "height=([\"'])(.-)%1")
-				
+
 				t[sname]=love.graphics.newQuad(x,y,width,height,sw,sh)
 			end
 			i=i+1
 		end
 	else
 		--READ CSV FILE ('i' means record number)
-		for line in love.filesystem.lines(url) do
+		for line in love.filesystem.lines(metafile) do
 			i=1
 			for data in line:gmatch("[^,]+") do
 				if i>5 then break end
@@ -204,6 +204,10 @@ function iffy.newAtlas(name,url,metafile,sw,sh)
 			--If a valid line was read
 			if type(t[sname])=='table' then
 				x,y,width,height=unpack(t[sname])
+
+				print(url)
+				print(x,y,width,height,sw,sh)
+
 				t[sname]=love.graphics.newQuad(x,y,width,height,sw,sh)
 			end
 		end

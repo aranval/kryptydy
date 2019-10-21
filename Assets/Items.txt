@@ -1,0 +1,23 @@
+local Items = {}
+
+-- Po kropce unikalne id itemu, używane w inventory. Wielkość liter ma znaczenie.
+Items.testItem1 = {
+    -- Nazwa Itemy
+    "TestItem1",
+    -- Opis Itemu
+    "Description",
+    -- Sprite Itemu z Assets/SpriteSheets/Items.xml 
+    "TestItem1.png"
+}
+
+-- Po kropce unikalne id itemu, używane w inventory. Wielkość liter ma znaczenie.
+Items.testItem2 = {
+    -- Nazwa Itemy
+    "TestItem1",
+    -- Opis Itemu
+    "Description",
+    -- Sprite Itemu z Assets/SpriteSheets/Items.xml 
+    "TestItem3.png"
+}
+
+return Items

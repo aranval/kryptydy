@@ -1,0 +1,11 @@
+Niżej wzór gotowy do wklejenia do pliku Assets/Items.txt
+
+-- Po kropce unikalne id itemu, używane w inventory. Wielkość liter ma znaczenie.
+Items.itemID = {
+    -- Nazwa Itemy
+    "Name",
+    -- Opis Itemu
+    "Description",
+    -- Sprite Itemu z Assets/SpriteSheets/Items.xml 
+    "item1.png"
+}

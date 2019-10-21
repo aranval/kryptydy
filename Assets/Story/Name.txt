@@ -1,6 +1,6 @@
 local Dialogues = {}
 
--- Domyślny dialog, gdy żaden z poniższych nie spełnia warunek.
+-- Domyślny dialog, gdy żaden z poniższych nie spełnia warunków.
 -- Musi nazywać się default
 Dialogues.default = {
     -- Dialog. other - mówi npc, self - mówi gracz
@@ -8,11 +8,11 @@ Dialogues.default = {
     -- Funkcja wykonuje się po dialogu
     -- Można zmienić statusu eventów
     function(gameEvents)
-
+        inventory:addItem("testItem2")
     end
 }
 
--- Jeśli kilka dilaogów bedzie spełniać warunki, wyświetli się pierwszy w kolejności
+-- Jeśli kilka dialogów bedzie spełniać warunki, wyświetli się pierwszy w kolejności.
 -- Nazwy po kropce nie wpływają na działanie gry
 
 Dialogues.test1 = {
@@ -28,13 +28,14 @@ Dialogues.test1 = {
     -- Można zmienić statusu eventów
     function() 
         gameEvents.event1 = 1
+        inventory:addItem("testItem1")
     end
 }
 
 Dialogues.test2 = {
     -- Warunki do spełnienia aby dialog sie wyświetlił
     function()
-        return gameEvents.event2 == 0 and gameEvents.event1 == 1
+        return gameEvents.event2 == 0 and gameEvents.event1 == 1 and inventory:getNumberOfItem("testItem1") == 1
     end,    
     -- Dialog. other - mówi npc, self - mówi gracz
     {"other", "Event2"},
@@ -44,6 +45,7 @@ Dialogues.test2 = {
     -- Można zmienić statusu eventów
     function() 
         gameEvents.event2 = 1
+        inventory:removeItem("testItem1")
     end
 }
 

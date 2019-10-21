@@ -9,8 +9,11 @@ bumpWorld = nil
 tinyWorld = libs.tiny.world()
 tilemaps = {}
 switchToLevel = nil
+inventory = nil
 
 gameEvents = {}
+items = {}
+
 
 require("src/functions")
 
@@ -41,12 +44,42 @@ function love.load()
 	-- Pierwszy poziom
 	switchToLevel = "TestLevel"
 
-	-- Story
+	-- globalne inventory
+	inventory = classes.inventory()
+	
+	-- Wczytywanie
 	gameEvents = doFile("Assets/Story/GameEvents.txt")
+	local itemsArray = doFile("Assets/Items.txt")
+	for key, value in pairs(itemsArray) do
+		items[key] = classes.item(value[1], value[2], value[3])
+	end
 
-	-- iffy Init Wczytywanie Tilesetów i tilemap
-	libs.iffy.newTileset("test", "Assets/Levels/Tilesets/test.png")
-    tilemaps.TestLevel = libs.iffy.newTilemap("TestLevel", "Assets/Levels/TestLevel_Map.csv")
+	libs.iffy.newAtlas("Assets/SpriteSheets/Items.png", "Assets/SpriteSheets/Items.xml")
+
+	-- Wczytywanie Tilesetów i tilemap
+	local tilemapsPath = "Assets/Levels/"
+	local files = love.filesystem.getDirectoryItems(tilemapsPath)
+	for i, file in ipairs(files) do
+		local fileExtension = file:match("[^.]+$")
+		local fileName = file:gsub(".[^.]+$", "")
+
+		if fileExtension == "csv" then
+			if(fileName:find("_Map")) then
+				local levelName = fileName:gsub("_Map", "")
+				tilemaps[levelName] = libs.iffy.newTilemap(levelName, tilemapsPath .. file)
+			end
+		end
+	end
+	local tilesetsPath = "Assets/Levels/Tilesets/"
+	local files = love.filesystem.getDirectoryItems(tilesetsPath)
+	for key, file in ipairs(files) do
+		local fileExtension = file:match("[^.]+$")
+		local fileName = file:gsub(".[^.]+$", "")
+
+		if fileExtension == "png" then
+			libs.iffy.newTileset(fileName, tilesetsPath .. file)
+		end
+	end
 	
 	libs.gameState.registerEvents()
 	libs.gameState.switch(states.menu)

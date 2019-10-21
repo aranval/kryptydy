@@ -102,6 +102,15 @@ function LevelState:draw()
 
     -- Okno dialogowe
     libs.talkies:draw()
+
+    --Draw Inventory DEBUG
+    love.graphics.print(inventory.lenght, 1, 42)
+    local i = 0
+    for key, value in pairs(inventory.items) do
+        libs.iffy.drawSprite(items[key].sprite, i*32, 0)
+        love.graphics.print(value, i*32, 0)
+        i = i + 1
+    end
 end
 
 return LevelState

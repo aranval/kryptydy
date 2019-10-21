@@ -1,4 +1,3 @@
-Po dodaniu ekwipunku do gry, będzie można sprawdzać jedo zwartość lub dodować itemy po dialogu.
 Niżej przykład dialogu gotowy do wklejenia. Dialogi muszą mieć unikalną nazwe.
 
 Dialogues.nazwaDialogu = {
@@ -6,16 +5,23 @@ Dialogues.nazwaDialogu = {
     -- Można użyć:
     -- < - mniejsze, > - większe, == - równe
     -- and - i , or - lub
-    -- W tym momędzie dostępne tylko gameEvents z pliku "GmameEvents.txt"
+    -- Dostępne gameEvents z pliku "GmameEvents.txt"
+    -- Dostepne Inventory:
+    -- inventory:getNumberOfItem(itemID) -- zwraca wartość itemu, itemID to string musi być w "".
+    -- itemID z pliku Assets/Items.txt
     function()
-        return gameEvents.event1 == 0
+        return gameEvents.event1 == 0 and inventory:getNumberOfItem("testItem") == 1
     end,
     -- Dialog. other - mówi npc, self - mówi gracz
     {"other", "Mówi npc"},
     {"self", "Mówi player"}
     -- Funkcja wykonuje się po dialogu
     -- Można zmienić statusu eventów
+    -- Dostepne Inventory:
+    -- inventory:addItem(itemID) - dodaje item
+    -- inventory:removeItem(itemID) - dodaje item
     function() 
         gameEvents.event1 = 1
+        inventory:removeItem("testItem")
     end
 }

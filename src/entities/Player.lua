@@ -11,7 +11,7 @@ local Player = libs.class{
         self.position = libs.vector(x, y)
         self.collider = classes.collider(32, 32)
         self.animation = libs.peachy.new("Assets/Animations/Player.json", love.graphics.newImage("Assets/Animations/Player.png"), "Idle")
-        self.animationTag = "Idle"  
+        self.animationTag = "Idle"
 
         -- Movement
         self.currentPosition = libs.vector(x, y)
