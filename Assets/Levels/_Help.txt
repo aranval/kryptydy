@@ -10,31 +10,31 @@ Niżej gotowe szalony które można wkleić do pliku info poziomu, z opisem atry
 
 Info.entities.player = {
     -- Nazwa z foldery "src/entities"
-    "Player"
+    "Player",
     -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
-    {1, 1}
+    1, 1,
     -- Nazwa animacji z folderu "Assets/Animations"
     "Player"
 }
 
 Info.entities.triggerToTestLevel = {
     -- Nazwa z foldery "src/entities"
-    "TriggerToLevel"
+    "TriggerToLevel",
     -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
-    {12, 1}
+    12, 1,
     -- Nazwa poziomu z "Assets/Levels" do którego prowadzi trigger
     "TestLevel"
 }
 
 Info.entities.npc = {
     -- Nazwa z foldery "src/entities"
-    "NPC"
+    "NPC",
     -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
-    "testNPC"
+    "testNPC",
     -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
-    {4, 4}
+    4, 4,
     -- Nazwa animacji z folderu "Assets/Animations"
-    "TestNPC"
-    -- Wartość niżje odpowiada czy postać bedzie inicjować walke jeśli true, jeśli false zwykły dialog
+    "TestNPC",
+    -- Wartość niżje odpowiada za to czy postać bedzie inicjować walke jeśli true, jeśli false zwykły dialog
     false
 }
