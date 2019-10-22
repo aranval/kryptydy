@@ -8,7 +8,7 @@ Niżej gotowe szalony które można wkleić do pliku info poziomu, z opisem atry
 
 
 
-TestLevel.entities.player = {
+Info.entities.player = {
     -- Nazwa z foldery "src/entities"
     "Player"
     -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
@@ -17,7 +17,7 @@ TestLevel.entities.player = {
     "Player"
 }
 
-TestLevel.entities.triggerToTestLevel = {
+Info.entities.triggerToTestLevel = {
     -- Nazwa z foldery "src/entities"
     "TriggerToLevel"
     -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
@@ -26,7 +26,7 @@ TestLevel.entities.triggerToTestLevel = {
     "TestLevel"
 }
 
-TestLevel.entities.npc = {
+Info.entities.npc = {
     -- Nazwa z foldery "src/entities"
     "NPC"
     -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
