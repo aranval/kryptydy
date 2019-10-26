@@ -2,6 +2,9 @@ local BattleState = {}
 
 function tryShowActions(actions)
     if battleState == "menu" then
+        if BattleState.buttons == BattleState.menuButtons then
+            return true
+        end
         libs.tiny.remove(BattleState.tinyWorld, unpack(BattleState.buttons))
         BattleState.buttons = BattleState.menuButtons;
         libs.tiny.add(BattleState.tinyWorld, unpack(BattleState.buttons))
@@ -171,7 +174,7 @@ function BattleState:update(dt)
         end
     end
 
-    libs.talkies.update(dt)
+    
     self.tinyWorld:update(dt, updateSystemFilter)
 end
 
