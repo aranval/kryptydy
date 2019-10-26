@@ -19,6 +19,45 @@ function copyTable(table)
     return copy
 end
 
+function loadStoryFile(npcName)
+    local storyPath = "Assets/Story/" .. npcName .. ".txt"
+    local info = love.filesystem.getInfo(storyPath)
+    if info == nil then 
+        return nil 
+    end
+
+    -- Wczytanie pliku do tablicy
+    return doFile(storyPath)
+end
+
+function tryShowDialogue(dialogues) 
+    local dialogue = nil
+    for key, value in pairs(dialogues) do
+        local checkFunction = value[1]
+        if checkFunction() then
+            dialogue = dialogues[key]
+            break
+        end
+    end
+
+    if dialogue == nil then
+        return false
+    end
+
+    local config = {
+        oncomplete = function(dialog) 
+            dialogue[4]()
+            states.battle.refresh = true
+        end,
+    }
+
+    if dialogue[5] then
+        config.options = dialogue[5]
+    end
+
+    return true, libs.talkies.say(dialogue[2], dialogue[3], config)
+end
+
 function generateCollidersFromCSV(levelName)
     local colliders = {}
     local x, y = 0, 0

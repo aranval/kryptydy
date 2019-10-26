@@ -6,14 +6,14 @@ states = require("src/states")
 CONST = require("src/constants")
 
 bumpWorld = nil
-tinyWorld = libs.tiny.world()
 tilemaps = {}
 switchToLevel = nil
-inventory = nil
+player = nil
 
+battleState = nil
+inventory = nil
 gameEvents = {}
 items = {}
-
 
 require("src/functions")
 
@@ -24,9 +24,9 @@ Input = libs.baton.new {
 	  right = {'key:right', 'key:d', 'axis:leftx+', 'button:dpright'},
 	  up = {'key:up', 'key:w', 'axis:lefty-', 'button:dpup'},
 	  down = {'key:down', 'key:s', 'axis:lefty+', 'button:dpdown'},
-	  action = {'key:x', 'button:a'},
-	  f1 = {'key:f1'},
-	  f2 = {'key:f2'}
+	  inventory = {'key:i', 'button:y'},
+	  action = {'key:x', 'key:return', 'button:a'},
+	  back = {'key:escape', 'button:b'}
 	},
 	pairs = {
 	  move = {'left', 'right', 'up', 'down'}
@@ -35,26 +35,28 @@ Input = libs.baton.new {
   }
 
 -- ECS Filters
-drawSystemFilter = libs.tiny.requireAll("isDrawingSystem")
+drawGUISystemFilter = libs.tiny.requireAll("isDrawingSystem", "isGUI")
+drawSystemFilter = libs.tiny.requireAll("isDrawingSystem", libs.tiny.rejectAll("isGUI"))
+drawAllSystemFilter = libs.tiny.requireAll("isDrawingSystem")
+
 updateSystemFilter = libs.tiny.rejectAll("isDrawingSystem")
 
 function love.load()
-	love.graphics.setDefaultFilter("nearest", "nearest")
+	love.graphics.setDefaultFilter("nearest", "nearest")	
 
-	-- Pierwszy poziom
-	switchToLevel = "TestLevel"
+	libs.iffy.newAtlas("Assets/SpriteSheets/Items.png", "Assets/SpriteSheets/Items.xml")
 
-	-- globalne inventory
-	inventory = classes.inventory()
-	
-	-- Wczytywanie
-	gameEvents = doFile("Assets/Story/GameEvents.txt")
+	-- Wczytywanie itemów
 	local itemsArray = doFile("Assets/Items.txt")
 	for key, value in pairs(itemsArray) do
 		items[key] = classes.item(value[1], value[2], value[3])
 	end
 
-	libs.iffy.newAtlas("Assets/SpriteSheets/Items.png", "Assets/SpriteSheets/Items.xml")
+	-- Moonshine - rozmazanie tła
+	moonshineEffectNames = {"desaturate", "vignette"} -- pixelate, desaturate, scanlines, vignette
+	moonshineEffect = libs.moonshine(libs.moonshine.effects.vignette)
+		.chain(libs.moonshine.effects.desaturate)
+	moonshineEffect.disable(unpack(moonshineEffectNames))
 
 	-- Wczytywanie Tilesetów i tilemap
 	local tilemapsPath = "Assets/Levels/"
@@ -87,5 +89,14 @@ end
 
 function love.update(dt)
 	Input:update()
+	if Input:pressed("action") then
+		libs.talkies.onAction()
+	end
+	if Input:pressed("up") then
+		libs.talkies.prevOption()
+	end
+	if Input:pressed("down") then
+		libs.talkies.nextOption()
+	end
 	libs.talkies.update(dt)
 end

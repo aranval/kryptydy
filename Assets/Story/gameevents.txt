@@ -1,4 +1,4 @@
--- Plik można dowolnie modifikować. Dodając lub usuwając eventy które puźniej beda używane w dialogach do sprawdzania warunków.
+-- Plik można dowolnie modifikować. Dodając lub usuwając eventy które później beda używane w dialogach do sprawdzania warunków.
 -- gameEvents i po kropce po kropce dowolna nazwa.
 -- gameEvents.nazwaEventu 
 
@@ -7,5 +7,6 @@ gameEvents = {}
 gameEvents.event1 = 0
 gameEvents.event2 = 0
 gameEvents.event3 = 0
+gameEvents.event4 = 0
 
 return gameEvents

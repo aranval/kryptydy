@@ -204,10 +204,6 @@ function iffy.newAtlas(name,url,metafile,sw,sh)
 			--If a valid line was read
 			if type(t[sname])=='table' then
 				x,y,width,height=unpack(t[sname])
-
-				print(url)
-				print(x,y,width,height,sw,sh)
-
 				t[sname]=love.graphics.newQuad(x,y,width,height,sw,sh)
 			end
 		end

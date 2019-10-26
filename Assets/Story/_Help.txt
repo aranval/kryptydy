@@ -1,4 +1,30 @@
-Niżej przykład dialogu gotowy do wklejenia. Dialogi muszą mieć unikalną nazwe.
+
+----------------------------------------------------------------------------------------------
+-- Opis
+----------------------------------------------------------------------------------------------
+
+-- Używane podczas walki
+Actions.nazwaAkcji = {
+    -- Warunki do spełnienia aby dialog sie wyświetlił
+    -- Można użyć:
+    -- < - mniejsze, > - większe, == - równe
+    -- and - i , or - lub
+    -- Można użyć battleState przykad użycia w pliku "Enemy.txt"
+    function()
+        
+    end,
+    -- Text Akcji, wyśiietla sie na przycisku
+    "",
+    -- Funkcja wykonuje sie po akcji
+    -- Można zmienić statusu eventów
+    -- Dostepne Inventory:
+    -- inventory:addItem(itemID) - dodaje item
+    -- inventory:removeItem(itemID) - dodaje item
+    -- Zmienić wartość battleState
+    function() 
+        
+    end,
+}
 
 Dialogues.nazwaDialogu = {
     -- Warunki do spełnienia aby dialog sie wyświetlił
@@ -7,21 +33,111 @@ Dialogues.nazwaDialogu = {
     -- and - i , or - lub
     -- Dostępne gameEvents z pliku "GmameEvents.txt"
     -- Dostepne Inventory:
-    -- inventory:getNumberOfItem(itemID) -- zwraca wartość itemu, itemID to string musi być w "".
+    -- inventory:getNumberOfItem(itemID) -- zwraca ilość itemu w ekwipunku, itemID to string musi być w "".
     -- itemID z pliku Assets/Items.txt
+    -- Podczas walki można użyć battleState przykad użycia w pliku "Enemy.txt"
     function()
-        return gameEvents.event1 == 0 and inventory:getNumberOfItem("testItem") == 1
+        
     end,
-    -- Dialog. other - mówi npc, self - mówi gracz
-    {"other", "Mówi npc"},
-    {"self", "Mówi player"}
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "",
+    },
     -- Funkcja wykonuje się po dialogu
     -- Można zmienić statusu eventów
     -- Dostepne Inventory:
     -- inventory:addItem(itemID) - dodaje item
     -- inventory:removeItem(itemID) - dodaje item
+    -- Podczas walki można zmienić wartość battleState
+    function()
+        
+    end,
+    -- Wybór (Opcjonalne)
+    -- Pod ostatnią linią dialogu wyświetlają się opcje
+    {
+        {
+            -- Text opcji
+            "",  
+            -- Funkcja wykonuje się po wybraniu opcji
+            function() 
+                
+            end,
+        },
+        {
+            -- Text opcji
+            "",  
+            -- Funkcja wykonuje się po wybraniu opcji
+            function()
+                
+            end,
+        },
+    },
+}
+
+----------------------------------------------------------------------------------------------
+-- Niżej gotowe wzory do wklejenia. Muszą mieć unikalną nazwe.
+----------------------------------------------------------------------------------------------
+
+Actions.nazwaAkcji = {
+    -- Warunek
+    function()
+        
+    end,
+    -- Text Akcji, wyśiietla sie na przycisku
+    "",
+    -- Funkcja wykonuje sie po akcji
     function() 
-        gameEvents.event1 = 1
-        inventory:removeItem("testItem")
-    end
+        
+    end,
+}
+
+Dialogues.nazwaDialogu = {
+    -- Warunek
+    function()
+        
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        
+    end,
+}
+
+Dialogues.nazwaDialogu = {
+    -- Warunek
+    function()
+        
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()        
+        
+    end,
+    -- Wybór
+    {
+        {
+            "",  
+            function() 
+            
+            end
+        },
+        {
+            "",  
+            function()
+            
+            end
+        },
+    },
 }

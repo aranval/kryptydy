@@ -2,7 +2,7 @@ local LevelState = {}
 
 -- Zmiana poziomu
 -- levelName - nazwa poziomu z "Assets/Levels"
-local function switchLevel(levelState, levelName)
+local function switchLevel(tinyWorld, levelState, levelName)
     local levelInfoPath = "Assets/Levels/" .. levelName .. "_Info.txt"
     local info = love.filesystem.getInfo(levelInfoPath)
     assert(info, "Level " .. levelName .. " don't exist.")
@@ -30,12 +30,16 @@ local function switchLevel(levelState, levelName)
         local entity = require("src/entities/"..type)(unpack(entityInfo))
 
         if type == "player" then
+            player = entity
             levelState.cameraTarget = entity
             levelState.camera:lookAt(entity.position:unpack())
         end
 
         libs.tiny.addEntity(tinyWorld, entity)
     end
+
+    -- Dodanie inventory
+    libs.tiny.addEntity(tinyWorld, inventory)
 
     if(levelState.cameraTarget == nil) then
         levelState.camera:lookAt(levelState.centerPoint:unpack())
@@ -44,18 +48,21 @@ end
 
 function LevelState:enter(prev)    
     bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world
-
-    libs.tiny.add(tinyWorld,
+    self.tinyWorld = libs.tiny.world()
+    libs.tiny.add(self.tinyWorld,
         -- Systems
-        require("src/systems/TileMapDrawSystem"),
+        require("src/systems/TileMapDrawSystem")(),
         
-        require("src/systems/PlayerControlSystem"),
+        require("src/systems/PlayerControlSystem")(),
         
-        require("src/systems/MovementSystem"),
-        require("src/systems/CollisionSystem"),
+        require("src/systems/MovementSystem")(),
+        require("src/systems/CollisionSystem")(),
 
-        require("src/systems/AnimationUpdateSystem"),
-        require("src/systems/AnimationDrawSystem")
+        require("src/systems/AnimationUpdateSystem")(),
+        require("src/systems/AnimationDrawSystem")(),
+
+        require("src/systems/InventoryUpdateSystem")(),
+        require("src/systems/InventoryDrawSystem")()
     )
 
     self.nextLevel = nil
@@ -68,20 +75,27 @@ function LevelState:enter(prev)
     self.cameraTarget = nil
 end
 
+function LevelState:resume()
+    
+end
+
 function LevelState:leave()
-    libs.tiny.clearEntities(tinyWorld)
-    libs.tiny.clearSystems(tinyWorld)
-    libs.tiny.refresh(tinyWorld)
+    moonshineEffect.disable(unpack(moonshineEffectNames))
+    inventory.isOpen = false
+
+    libs.tiny.clearEntities(self.tinyWorld)
+    libs.tiny.clearSystems(self.tinyWorld)
+    libs.tiny.refresh(self.tinyWorld)
 end
 
 function LevelState:update(dt)
     -- Przejście do innego poziomu gdy zmienna globalna switchToLevel ma inną warość niż nil
-    if(switchToLevel ~= nil) then
-        switchLevel(self, switchToLevel)
+    if switchToLevel ~= nil then
+        switchLevel(self.tinyWorld, self, switchToLevel)
         switchToLevel = nil
     end
 
-    tinyWorld:update(dt, updateSystemFilter)
+    self.tinyWorld:update(dt, updateSystemFilter)
 
     -- Camera Update
     local cameraX, cameraY = 0, 0
@@ -92,25 +106,24 @@ function LevelState:update(dt)
     end
 
     self.camera:lockPosition(cameraX, cameraY, self.cameraSmoother)
+
+    
+    if player.isDead then
+        libs.gameState.switch(states.gameOver)
+    end
 end
 
 function LevelState:draw()
-    self.camera:attach() 
-    tinyWorld:update(dt, drawSystemFilter);
-    --drawDebug(true)
-    self.camera:detach()    
+    moonshineEffect.draw(function() 
+        self.camera:attach() 
+        self.tinyWorld:update(dt, drawSystemFilter);
+        self.camera:detach() 
+    end)  
+
+    self.tinyWorld:update(dt, drawGUISystemFilter);
 
     -- Okno dialogowe
     libs.talkies:draw()
-
-    --Draw Inventory DEBUG
-    love.graphics.print(inventory.lenght, 1, 42)
-    local i = 0
-    for key, value in pairs(inventory.items) do
-        libs.iffy.drawSprite(items[key].sprite, i*32, 0)
-        love.graphics.print(value, i*32, 0)
-        i = i + 1
-    end
 end
 
 return LevelState

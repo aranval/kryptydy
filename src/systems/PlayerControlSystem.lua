@@ -1,6 +1,7 @@
-local PlayerControlSystem  = libs.tiny.processingSystem()
+local PlayerControlSystem  = libs.tiny.processingSystem(libs.class{})
 
 PlayerControlSystem.filter = libs.tiny.requireAll("controlable")
+PlayerControlSystem.canInteracte = true
 
 local function movementInput(entity, dt) 
     local input = libs.vector(Input:get("move"))
@@ -83,23 +84,25 @@ local function interact(entity, dt)
 end
 
 function PlayerControlSystem:process(entity, dt)
-    if(Input:pressed("left") or Input:pressed("right") or Input:released("up") or Input:released("down")) then
+    if Input:pressed("left") or Input:pressed("right") or Input:released("up") or Input:released("down") then
         entity.isHorizontalMove = true
     elseif Input:pressed("up") or Input:pressed("down") or Input:released("left") or Input:released("right") then
         entity.isHorizontalMove = false
     end
 
-    if not entity.isMoving then
+    if not entity.isMoving and not inventory.isOpen and not libs.talkies.isOpen() then
         movementInput(entity, dt)
-    end
+    end    
 
-    -- Talkies i interakcje
-    if not libs.talkies.isOpen() then
+    -- Interakcje
+    if self.canInteracte and not inventory.isOpen then
         interact(entity, dt)
+        canInteracte = false
     end
-    if Input:pressed("action") then
-		libs.talkies.onAction()
-	end
+end
+
+function PlayerControlSystem:postProcess(entity, dt)
+    self.canInteracte = not libs.talkies.isOpen()
 end
 
 return PlayerControlSystem 

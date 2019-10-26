@@ -1,0 +1,103 @@
+local Dialogues = {}
+
+-- Jeśli kilka dialogów bedzie spełniać warunki, wyświetli się pierwszy w kolejności.
+-- Nazwy po kropce nie wpływają na działanie gry
+
+Dialogues.event1 = {
+    -- Warunek
+    function()
+        return gameEvents.event1 == 0
+    end,
+    -- Tytuł
+    "Event1",
+    -- Dialog
+    {
+        "Event1", 
+        "abc", 
+        "abc",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        gameEvents.event1 = 1
+        inventory:addItem("testItem1", 2)
+    end,
+}
+
+Dialogues.event2 = {
+    -- Warunek
+    function()
+        return gameEvents.event2 == 0 and gameEvents.event1 == 1 and inventory:getNumberOfItem("testItem1") > 0
+    end,
+    -- Tytuł
+    "Event2",
+    -- Dialog
+    {
+        "Event2", 
+        "abc", 
+        "abc",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        gameEvents.event2 = 1
+        inventory:removeItem("testItem1")
+    end,
+}
+
+Dialogues.event3 = {
+    -- Warunek
+    function()
+        return gameEvents.event3 == 0 and gameEvents.event2 == 1
+    end,
+    -- Tytuł
+    "Event3",
+    -- Dialog
+    {
+        "Event3", 
+        "abc", 
+        "abc",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        gameEvents.event3 = 1
+    end,
+}
+
+Dialogues.event4 = {
+    -- Warunek
+    function()
+        return gameEvents.event4 == 0 and gameEvents.event3 == 1
+    end,
+    -- Tytuł
+    "Event4",
+    -- Dialog
+    {
+        "Event4", 
+        "abc", 
+        "abc",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        gameEvents.event4 = 1
+    end,
+}
+
+-- Domyślny dialog, gdy żaden z powyższych nie spełnia warunków.
+-- Musi być ostatni i w zwracać w true w waruku
+Dialogues.default = {
+    -- Warunek
+    function()
+        return true
+    end,
+    -- Tytuł
+    "Default",
+    -- Dialog
+    {
+        "a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function(gameEvents)
+        inventory:addItem("testItem2")
+    end
+}
+
+return Dialogues

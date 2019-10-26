@@ -1,4 +1,4 @@
-local CollisionSystem = libs.tiny.processingSystem()
+local CollisionSystem = libs.tiny.processingSystem(libs.class{})
 
 CollisionSystem.filter = libs.tiny.requireAll("collider")
 

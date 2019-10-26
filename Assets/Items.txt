@@ -3,9 +3,9 @@ local Items = {}
 -- Po kropce unikalne id itemu, używane w inventory. Wielkość liter ma znaczenie.
 Items.testItem1 = {
     -- Nazwa Itemy
-    "TestItem1",
+    "Proin felis",
     -- Opis Itemu
-    "Description",
+    "Sed non ullamcorper ante, et aliquet turpis",
     -- Sprite Itemu z Assets/SpriteSheets/Items.xml 
     "TestItem1.png"
 }
@@ -13,9 +13,9 @@ Items.testItem1 = {
 -- Po kropce unikalne id itemu, używane w inventory. Wielkość liter ma znaczenie.
 Items.testItem2 = {
     -- Nazwa Itemy
-    "TestItem1",
+    "Nullam maximus",
     -- Opis Itemu
-    "Description",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     -- Sprite Itemu z Assets/SpriteSheets/Items.xml 
     "TestItem3.png"
 }

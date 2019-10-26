@@ -1,5 +1,5 @@
 -- Nie obsługuje animacji tylko poruszanie obiektów
-local MovementSystem = libs.tiny.processingSystem()
+local MovementSystem = libs.tiny.processingSystem(libs.class{})
 
 MovementSystem.filter = libs.tiny.requireAll("currentPosition", "nextPosition", "speed", "isMoving")
 

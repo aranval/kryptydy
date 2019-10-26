@@ -1,4 +1,4 @@
-local TileMapDrawSystem = libs.tiny.processingSystem()
+local TileMapDrawSystem = libs.tiny.processingSystem(libs.class{})
 TileMapDrawSystem.isDrawingSystem = true
 
 TileMapDrawSystem.filter = libs.tiny.requireAll("tilemap", "tileset")

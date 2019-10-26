@@ -36,11 +36,26 @@ Info.entities.npc = {
     -- Nazwa z foldery "src/entities"
     "NPC",
     -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
-    "Name",
+    "NPC",
     -- Pozycja na mapie (x, y). Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół
     4, 4,
     -- Nazwa animacji z folderu "Assets/Animations"
-    "TestNPC"
+    "TestNPC",
+    -- Wartość niżje odpowiada czy postać bedzie inicjować walke jeśli true, jeśli false zwykły dialog
+    false
+}
+
+Info.entities.npc2 = {
+    -- Nazwa z foldery "src/entities"
+    "NPC",
+    -- Imię npc. Jeśli istnieje plik w "Assets/Story" o takiej samej nazwię powiąże się on z tym npc. Jeśli nie npc nie bedzie posiadał dialogów
+    "Enemy",
+    -- Pozycja na mapie. Jeden tile to jedna jednostka. Lewy górny róg to pozycja 0, 0. X w prawo. Y w dół  {x, y}
+    3, 1,
+    -- Nazwa animacji z folderu "Assets/Animations"
+    "TestEnemy",
+    -- Wartość niżje odpowiada czy postać bedzie inicjować walke jeśli true, jeśli false zwykły dialog
+    true
 }
 
 return Info

@@ -1,0 +1,212 @@
+local Actions = {}
+local Dialogues = {}
+
+
+----------------------------------------------------------------------
+-- Fight
+----------------------------------------------------------------------
+
+Actions.fight_0_1 = {
+    -- Warunek
+    function()
+        return battleState == "fight"
+    end,
+    -- Text Akcji, wyśiietla sie na przycisku
+    "Shy kick",
+    -- Funkcja wykonuje sie po akcji
+    function() 
+        battleState = "fight_1"
+    end,
+}
+Actions.fight_0_2 = {
+    -- Warunek
+    function()
+        return battleState == "fight"
+    end,
+    -- Text Akcji, wyśiietla sie na przycisku
+    "Gentle slap",
+    -- Funkcja wykonuje sie po akcji
+    function() 
+        battleState = "fight_1"
+    end,
+}
+
+Dialogues.fight_1 = {
+    -- Warunek
+    function()
+        return battleState == "fight_1"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Not very effective.",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        battleState = "fight_2"
+    end,
+}
+
+Actions.fight_2 = {
+    -- Warunki
+    function()
+        return battleState == "fight_2"
+    end,
+    -- Text Akcji, wyśiietla sie na przycisku
+    "Turn the other cheek",
+    -- Funkcja wykonuje sie po akcji
+    function()
+        battleState = "fight_3"
+    end,
+}
+
+
+Dialogues.fight_3 = {
+    -- Warunek
+    function()
+        return battleState == "fight_3"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "You are dead.",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        battleState = "run" -- Wychodzi z okna walki
+        player.isDead = true
+    end,
+}
+
+
+----------------------------------------------------------------------
+-- Talk
+----------------------------------------------------------------------
+
+Dialogues.talk_0 = {
+    -- Warunek
+    function()
+        return battleState == "talk"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Grrrrr",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()        
+        
+    end,
+    -- Wybór
+    {
+        {"Let's fight!",  function() 
+            battleState = "talk_1"
+        end},
+        {"Excuse me?",  function()
+            battleState = "talk_2"
+        end},
+        {"I'll just go!", function()
+            battleState = "talk_3"
+        end},
+    },
+}
+
+Dialogues.talk_1 = {
+    -- Warunek
+    function()
+        return battleState == "talk_1"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Let's fight, you foul creature!",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        battleState = "fight"
+    end,
+}
+
+Dialogues.talk_2 = {
+    -- Warunek
+    function()
+        return battleState == "talk_2"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Excuse me... sir?",
+        "Grrrrr",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        battleState = "run"
+    end,
+}
+
+Dialogues.talk_3 = {
+    -- Warunek
+    function()
+        return battleState == "talk_3"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Oh... ok. So I'll just...",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        battleState = "menu"
+    end,
+}
+
+
+----------------------------------------------------------------------
+-- Item
+----------------------------------------------------------------------
+
+Dialogues.item_0 = {
+    -- Warunek
+    function()
+        return battleState == "useItem" and inventory:getSelectedItemID() == "testItem1"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "Test Item 1",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+        inventory:removeItem("testItem1")
+    end,
+}
+
+
+----------------------------------------------------------------------
+-- Run
+----------------------------------------------------------------------
+
+Dialogues.run_0 = {
+    -- Warunek
+    function()
+        return battleState == "run"
+    end,
+    -- Tytuł
+    "",
+    -- Dialog
+    {
+        "You run.",
+    },
+    -- Funkcja wykonuje się po dialogu
+    function()
+    end,
+}
+
+return Dialogues, Actions
