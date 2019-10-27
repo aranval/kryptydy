@@ -1,5 +1,18 @@
 local CONST = {}
 
+CONST.menuFont = "Assets/Fonts/Pixel UniCode.ttf"
+CONST.menuFontSize = 48
+CONST.menuMargin = 25
+CONST.menuMarginBetweenOptions = 5
+CONST.menuControlsMarginBetween = 5
+CONST.menuControlsMarginTop = 50
+CONST.menuControlsMarginLeft = 10
+
+CONST.battleFont = "Assets/Fonts/Pixel UniCode.ttf"
+CONST.battleFontSize = 24
+CONST.talkiesFont = "Assets/Fonts/Pixel UniCode.ttf"
+CONST.talkiesFontSize = 24
+
 CONST.cameraSpeed = 2
 CONST.tileSize = 32
 

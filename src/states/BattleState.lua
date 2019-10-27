@@ -125,6 +125,7 @@ function BattleState:enter(prev, npc)
         inventory,
         unpack(self.buttons)        
     )
+    self.font = love.graphics.newFont(CONST.battleFont, CONST.battleFontSize, "normal")
 
 end
 
@@ -179,6 +180,7 @@ function BattleState:update(dt)
 end
 
 function BattleState:draw()
+    love.graphics.setFont(self.font)
     self.tinyWorld:update(dt, drawAllSystemFilter);
 
     libs.talkies:draw()

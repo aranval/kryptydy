@@ -4,12 +4,14 @@ libs = require("src/libs")
 classes = require("src/classes")
 states = require("src/states")
 CONST = require("src/constants")
+fonts = {}
 
 bumpWorld = nil
 tilemaps = {}
 switchToLevel = nil
 player = nil
 
+pause = true
 battleState = nil
 inventory = nil
 gameEvents = {}
@@ -46,7 +48,7 @@ function love.load()
 
 	libs.iffy.newAtlas("Assets/SpriteSheets/Items.png", "Assets/SpriteSheets/Items.xml")
 
-	-- Wczytywanie itemów
+	-- Wczytanie itemów
 	local itemsArray = doFile("Assets/Items.txt")
 	for key, value in pairs(itemsArray) do
 		items[key] = classes.item(value[1], value[2], value[3])
@@ -58,7 +60,7 @@ function love.load()
 		.chain(libs.moonshine.effects.desaturate)
 	moonshineEffect.disable(unpack(moonshineEffectNames))
 
-	-- Wczytywanie Tilesetów i tilemap
+	-- Wczytanie Tilesetów i tilemap
 	local tilemapsPath = "Assets/Levels/"
 	local files = love.filesystem.getDirectoryItems(tilemapsPath)
 	for i, file in ipairs(files) do
@@ -83,20 +85,28 @@ function love.load()
 		end
 	end
 	
+	libs.talkies.font = love.graphics.newFont(CONST.talkiesFont, CONST.talkiesFontSize, "normal")
+
 	libs.gameState.registerEvents()
 	libs.gameState.switch(states.menu)
 end
 
 function love.update(dt)
 	Input:update()
-	if Input:pressed("action") then
-		libs.talkies.onAction()
+	if libs.gameState ~= states.menu and Input:pressed("back") and not libs.talkies.isOpen() then
+		libs.gameState.push(states.menu, true)
 	end
-	if Input:pressed("up") then
-		libs.talkies.prevOption()
+	if not pause then
+		if Input:pressed("action") then
+			libs.talkies.onAction()
+		end
+		if Input:pressed("up") then
+			libs.talkies.prevOption()
+		end
+		if Input:pressed("down") then
+			libs.talkies.nextOption()
+		end
+		
+		libs.talkies.update(dt)
 	end
-	if Input:pressed("down") then
-		libs.talkies.nextOption()
-	end
-	libs.talkies.update(dt)
 end

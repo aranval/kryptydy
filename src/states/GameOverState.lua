@@ -1,15 +1,19 @@
 local GameOverState = {}
 
 function GameOverState:enter()
-    
+    pause = true
 end
 
 function GameOverState:update()
     
 end
 
+function GameOverState:leave()
+    pause = false
+end
+
 function GameOverState:keypressed() 
-    libs.gameState.switch(states.menu)
+    libs.gameState.switch(states.menu, false)
 end
 
 function GameOverState:draw()

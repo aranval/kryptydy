@@ -46,7 +46,7 @@ local function switchLevel(tinyWorld, levelState, levelName)
     end
 end
 
-function LevelState:enter(prev)    
+function LevelState:enter(prev)
     bumpWorld = libs.bump.newWorld() -- bump world musi być stworzony przed tiny world
     self.tinyWorld = libs.tiny.world()
     libs.tiny.add(self.tinyWorld,
