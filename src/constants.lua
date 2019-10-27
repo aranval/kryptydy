@@ -12,6 +12,9 @@ CONST.battleFont = "Assets/Fonts/Pixel UniCode.ttf"
 CONST.battleFontSize = 24
 CONST.talkiesFont = "Assets/Fonts/Pixel UniCode.ttf"
 CONST.talkiesFontSize = 24
+CONST.gameOverFont = "Assets/Fonts/Pixel UniCode.ttf"
+CONST.gameOverFontBigSize = 119
+CONST.gameOverFontSize = 48
 
 CONST.cameraSpeed = 2
 CONST.tileSize = 32
