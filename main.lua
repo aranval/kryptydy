@@ -93,8 +93,12 @@ end
 
 function love.update(dt)
 	Input:update()
-	if libs.gameState ~= states.menu and Input:pressed("back") and not libs.talkies.isOpen() then
-		libs.gameState.push(states.menu, true)
+	if libs.gameState.current() ~= states.menu and Input:pressed("back") and not libs.talkies.isOpen() then
+		if(libs.gameState.current() == states.controls) then
+			libs.gameState.pop()
+		else
+			libs.gameState.push(states.menu, true)
+		end
 	end
 	if not pause then
 		if Input:pressed("action") then
